@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## Versatile Dashboard - Free AngularJS Admin Starter Theme
 
 ## [Demo](http://rawgit.com/start-angular/versatile-dashboard-theme/master/dist/index.html)
@@ -24,3 +25,6 @@ In the source, we have the less files of Bootstrap attached and the variables ha
 ### Automation tools
 
 - [Gulp](http://gulpjs.com/)
+=======
+# NimbleNotes
+>>>>>>> c31d30e5455bbc58c3df137706eeef246b14dafc
