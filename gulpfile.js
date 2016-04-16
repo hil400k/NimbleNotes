@@ -2,9 +2,8 @@
 'use strict';
 
 var gulp = require('gulp');
-var karma = require('karma').server;
-var argv = require('yargs').argv;
 var $ = require('gulp-load-plugins')();
+var argv = require('yargs').argv;
 
 gulp.task('styles', function() {
   return gulp.src('app/styles/main.less')
@@ -17,14 +16,7 @@ gulp.task('styles', function() {
 gulp.task('jshint', function() {
   return gulp.src('app/scripts/**/*.js')
     .pipe($.jshint())
-    //.pipe($.jshint.reporter('jshint-stylish'))
-    //.pipe($.jshint.reporter('fail'));
 });
-
-// gulp.task('jscs', function() {
-//   return gulp.src('app/scripts/**/*.js')
-//     .pipe($.jscs());
-// });
 
 gulp.task('html', ['styles'], function() {
   var lazypipe = require('lazypipe');
@@ -47,10 +39,6 @@ gulp.task('html', ['styles'], function() {
 
 gulp.task('images', function() {
   return gulp.src('app/images/**/*')
-    // .pipe($.cache($.imagemin({
-    //   progressive: true,
-    //   interlaced: true
-    // })))
     .pipe(gulp.dest('dist/images'));
 });
 
@@ -100,13 +88,6 @@ gulp.task('serve', ['wiredep', 'connect', 'fonts', 'watch'], function() {
   }
 });
 
-gulp.task('test', function(done) {
-  karma.start({
-    configFile: __dirname + '/test/karma.conf.js',
-    singleRun: true
-  }, done);
-});
-
 // inject bower components
 gulp.task('wiredep', function() {
   var wiredep = require('wiredep').stream;
@@ -125,10 +106,6 @@ gulp.task('wiredep', function() {
   gulp.src('app/*.html')
     .pipe(wiredep({exclude: exclude}))
     .pipe(gulp.dest('app'));
-
-  gulp.src('test/*.js')
-    .pipe(wiredep({exclude: exclude, devDependencies: true}))
-    .pipe(gulp.dest('test'));
 });
 
 gulp.task('watch', ['connect'], function() {
