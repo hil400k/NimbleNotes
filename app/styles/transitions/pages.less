@@ -4,7 +4,8 @@ to prevent collapsing during animation*/
  height: 65px; 
 }*/
 
-[ui-view] {
+
+.login-page, .ui-base {
   position: absolute;
   left: 0;
   right: 0;
@@ -12,17 +13,18 @@ to prevent collapsing during animation*/
   top: 0;
 }
 
+
 .ui-view-container {
   position: relative;
 }
 
 
 
-[ui-view].ng-leave        {
+.ui-base.ng-leave        {
     -webkit-animation: scaleDown .7s ease both;
     animation: scaleDown .7s ease both;
 }
-[ui-view].ng-enter    {  
+.ui-base.ng-enter    {  
   -webkit-animation: moveFromBottom .9s ease both;
   animation: moveFromBottom .9s ease both;
 }

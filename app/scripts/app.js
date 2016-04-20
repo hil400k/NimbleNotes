@@ -23,24 +23,19 @@
     .state('base', {
         abstract: true,
         url: '',
-        templateUrl: 'views/base.html'
+        templateUrl: 'views/base.html',
+		controller: 'BaseCtrl'
     })
     .state('login', {
-      url: '/login',
-      parent: 'base',
-      templateUrl: 'views/login.html',
-      controller: 'LoginCtrl'
-  })
-    .state('dashboard', {
-      url: '/dashboard',
-      parent: 'base',
-      templateUrl: 'views/dashboard.html',
-      controller: 'DashboardCtrl'
-  })
+		  url: '/login',
+		  parent: 'base',
+		  templateUrl: 'views/login.html',
+		  controller: 'LoginCtrl'
+	  })
     .state('overview', {
         url: '/overview',
-        parent: 'dashboard',
-        templateUrl: 'views/dashboard/overview.html'
+        parent: 'base',
+		templateUrl: 'views/dashboard/overview.html'
     })
     .state('reports', {
         url: '/reports',
