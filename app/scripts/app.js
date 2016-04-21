@@ -16,36 +16,49 @@
     ])
  .config(function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.when('/dashboard', '/dashboard/overview');
+    $urlRouterProvider.when('/dashboard', '/dashboard/notes');
     $urlRouterProvider.otherwise('/login');
 
     $stateProvider
     .state('base', {
         abstract: true,
-        url: '',
         templateUrl: 'views/base.html'
     })
     .state('login', {
-      url: '/login',
-      parent: 'base',
-      templateUrl: 'views/login.html',
-      controller: 'LoginCtrl'
-  })
-    .state('dashboard', {
-      url: '/dashboard',
-      parent: 'base',
-      templateUrl: 'views/dashboard.html',
-      controller: 'DashboardCtrl'
-  })
-    .state('overview', {
-        url: '/overview',
-        parent: 'dashboard',
-        templateUrl: 'views/dashboard/overview.html'
+          url: '/login',
+          parent: 'base',
+          templateUrl: 'views/login.html',
+          controller: 'LoginCtrl'
     })
-    .state('reports', {
-        url: '/reports',
+    .state('dashboard', {
+          abstract: true,
+          parent: 'base',
+          templateUrl: 'views/dashboard.html',
+          controller: 'DashboardCtrl'
+    })
+    .state('notes', {
+        url: '/notes',
         parent: 'dashboard',
-        templateUrl: 'views/dashboard/reports.html'
+        templateUrl: 'views/dashboard/notes.html',
+        controller: 'NotesCtrl'
+    })
+    .state('notes', { // if route has id should be 2 diff states or one with 2 views
+        url: '/notes/:id',
+        parent: 'dashboard',
+        templateUrl: 'views/dashboard/note.html',
+        controller: 'NoteCtrl'
+    })
+    .state('settings', {
+        url: '/settings',
+        parent: 'dashboard',
+        templateUrl: 'views/dashboard/settings.html',
+        controller: 'SettingsCtrl'
+    })
+    .state('about', {
+        url: '/about',
+        parent: 'dashboard',
+        templateUrl: 'views/dashboard/about.html',
+        controller: 'AboutCtrl'
     });
 
 });
