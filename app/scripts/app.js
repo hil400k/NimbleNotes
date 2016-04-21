@@ -28,7 +28,6 @@
     })
     .state('login', {
 		  url: '/login',
-		  parent: 'base',
 		  templateUrl: 'views/login.html',
 		  controller: 'LoginCtrl'
 	  })
@@ -39,7 +38,7 @@
     })
     .state('reports', {
         url: '/reports',
-        parent: 'dashboard',
+        parent: 'base',
         templateUrl: 'views/dashboard/reports.html'
     });
 
