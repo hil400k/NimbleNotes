@@ -1,0 +1,70 @@
+@import url(http://fonts.googleapis.com/css?family=Oswald:400,700,300);
+@black: #555;
+@white: #ffffff;
+
+.centered {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+::-webkit-resizer {
+  display: none;
+}
+
+body * {
+  outline: none !important;
+}
+
+header h1 {
+  .uppercase;
+  .centered;
+  background-color: @white;
+  box-shadow: 0px 0px 100px rgba(0,0,0,0.05);
+  color: @black;
+  font-weight: 300;
+  width: 300px;
+  padding: 10px 0px 10px 0px;
+  letter-spacing: 4px;
+}
+
+section {
+  .centered;
+}
+
+form#note-creation-form {
+  .centered;
+  width: 90%;
+  padding: 20px;
+  background-color: @white;
+    .create-note-btn {
+        width: 100px;
+    }
+}
+
+.form-control {
+  //.uppercase;
+
+  border-radius: 0;
+  background-color: @white;
+  outline: none;
+  border: none;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+textarea#message {
+//  min-height: 100px;
+  resize: vertical;
+  overflow: hidden;
+}
+
+button#send {
+  .uppercase;
+  letter-spacing: 4px;
+}

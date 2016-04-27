@@ -2,7 +2,7 @@
 	<snap-drawer snap-id="'notes'">
 		<div class="snap-menu">
 			<div class="sidebar-header text-center">
-				<img src="images/flat-avatar.png" alt="" class="sidebar-img img-circle">
+<!--				<img src="images/flat-avatar.png" alt="" class="sidebar-img img-circle">-->
 			</div>
 			<ul class="snap-ul">
 				<li ng-class="{active: $state.includes('notes')}"><a ui-sref="notes">NOTES</a></li>
@@ -13,7 +13,7 @@
 		</div>
 	</snap-drawer>
 	<snap-dragger></snap-dragger>
-	<snap-content snap-opt-tap-to-close="false" snap-id="'notes'">
+	<snap-content snap-opt-tap-to-close="false" class="bg-dark" snap-id="'notes'">
 		<a href="" snap-id="'notes'" snap-toggle="left" ng-click="menuOpen = !menuOpen">
 			<span class="menutoggle">
 				<i ng-hide="menuOpen" class="fa fa-bars fa-2x" ></i>
@@ -24,8 +24,12 @@
 		</div>
 		<div class="jumbotron">
 			<div class="container">
-				
-				
+                <div class="row">
+                    <div class="col-sm-12" id="note-creator" ng-controller="NotesCreatorCtrl as vm" ng-include="'../views/dashboard/note-creator.html'"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12" id="notes-list" ng-controller="NotesListCtrl as vm"></div>
+                </div>
 			</div>
 		</div>
 	</snap-content>	

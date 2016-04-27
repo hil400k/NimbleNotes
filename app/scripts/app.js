@@ -10,6 +10,9 @@
  */
  angular
  .module('yapp', [
+    'yapp.controllers',
+    'yapp.components',
+    'yapp.services',
     'ui.router',
     'snap',
     'ngAnimate'
@@ -28,37 +31,43 @@
           url: '/login',
           parent: 'base',
           templateUrl: 'views/login.html',
-          controller: 'LoginCtrl'
+          controller: 'LoginCtrl',
+          controllerAs: 'login'
     })
     .state('dashboard', {
           abstract: true,
           parent: 'base',
           templateUrl: 'views/dashboard.html',
-          controller: 'DashboardCtrl'
+          controller: 'DashboardCtrl',
+          controllerAs: 'dashboard'
     })
     .state('notes', {
         url: '/notes',
         parent: 'dashboard',
         templateUrl: 'views/dashboard/notes.html',
-        controller: 'NotesCtrl'
+        controller: 'NotesCtrl',
+        controllerAs: 'notes'
     })
-    .state('notes', { // if route has id should be 2 diff states or one with 2 views
+    .state('note', {
         url: '/notes/:id',
         parent: 'dashboard',
         templateUrl: 'views/dashboard/note.html',
-        controller: 'NoteCtrl'
+        controller: 'NoteCtrl',
+        controllerAs: 'note'
     })
     .state('settings', {
         url: '/settings',
         parent: 'dashboard',
         templateUrl: 'views/dashboard/settings.html',
-        controller: 'SettingsCtrl'
+        controller: 'SettingsCtrl',
+        controllerAs: 'settings'
     })
     .state('about', {
         url: '/about',
         parent: 'dashboard',
         templateUrl: 'views/dashboard/about.html',
-        controller: 'AboutCtrl'
+        controller: 'AboutCtrl',
+        controllerAs: 'about'
     });
 
 });

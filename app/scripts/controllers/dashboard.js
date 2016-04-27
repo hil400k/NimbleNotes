@@ -1,15 +1,8 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name yapp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of yapp
- */
-angular.module('yapp')
-  .controller('DashboardCtrl', function($scope, $state) {
+angular.module('yapp.controllers', [])
+  .controller('DashboardCtrl', function($state) {
 
-    $scope.$state = $state;
+    this.$state = $state;
 
   });
