@@ -16,4 +16,16 @@ angular.module('yapp.components', [])
             }
         };
     }
-]);
+])
+
+.directive('note', function() {
+    return {
+        restrict: 'E',
+        replace: 'false',
+        scope: true,
+        templateUrl: 'views/dashboard/note.html',
+        link: function(scope, elem, attrs, ctrl) {
+
+        }
+    }
+});

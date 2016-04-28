@@ -12,7 +12,6 @@
  .module('yapp', [
     'yapp.controllers',
     'yapp.components',
-    'yapp.services',
     'ui.router',
     'snap',
     'ngAnimate'
@@ -46,7 +45,7 @@
         parent: 'dashboard',
         templateUrl: 'views/dashboard/notes.html',
         controller: 'NotesCtrl',
-        controllerAs: 'notes'
+        controllerAs: 'notesCtrl'
     })
     .state('note', {
         url: '/notes/:id',

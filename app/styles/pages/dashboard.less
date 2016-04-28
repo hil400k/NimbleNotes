@@ -1,60 +1,36 @@
 .dashboard-page {
-
 	position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
-
     background: @brand-primary;
     color: white;
-
-    /*
-     * Base structure
-     */
-
-
-    /*
-     * Global add-ons
-     */
-
-     .sub-header {
+    .sub-header {
       padding-bottom: 10px;
       border-bottom: 1px solid #eee;
-  }
-
-    /*
-     * Top navigation
-     * Hide default border to remove 1px line.
-     */
-     .navbar-fixed-top {
-      border: 0;
-  }
-
-  
-  h2 {
-   font-weight: 300;
-   small {
-    color: #fff;
-}
-}
-
-
-    /*
-     * Main content
-     */
-
-     .main {
-      padding: 20px;
-      position: absolute;
-      top: 0px;
-      bottom: 0px;
-      overflow-x: hidden;
-      overflow-y: auto;
-      .jumbotron {
-        background: inherit;
-        margin-top: 20px;
     }
+    .navbar-fixed-top {
+      border: 0;
+    }
+
+    h2 {
+       font-weight: 300;
+        small {
+            color: #fff;
+        }
+    }
+    .main {
+          padding: 20px;
+          position: absolute;
+          top: 0px;
+          bottom: 0px;
+          overflow-x: hidden;
+          overflow-y: auto;
+          .jumbotron {
+              background: inherit;
+              margin-top: 20px;
+          }
 }
 @media (min-width: 768px) {
   .main {
@@ -101,6 +77,56 @@
   }
   .fr {
     padding-left: 60px;
+}
+
+#notes-list {
+    .grid {
+        overflow: hidden;
+        padding: 0.5em 0 0 0.5em;
+        max-width: 76em;
+        margin: 0 auto;
+        list-style-type: none;
+        li {
+            padding: 0 0.5em 0.5em 0;
+            @media all and (min-width: 27em) {
+                width: 50%;
+                float: left;
+            }
+            @media all and (min-width: 40em) {
+                width: 33.3333333%;
+            }
+            @media all and (min-width: 60em) {
+                width: 25%;
+            }
+
+            .note {
+                position: relative;
+                text-align: left;
+                padding: 5px 10px;
+                .note-text {
+                    margin-bottom: 30px;
+                }
+                .note-date {
+                    position: absolute;
+                    bottom: 0;
+                    padding-bottom: 5px;
+                }
+            }
+        }
+        li.wide {
+            @media all and (min-width: 40em) {
+                width: 66.666666%;
+            }
+            @media all and (min-width: 60em) {
+                width: 50%;
+            }
+        }
+        li > div {
+            background: lighten(@control-color, 10%);
+            text-align: center;
+            height: 300px;
+        }
+    }
 }
 
 }

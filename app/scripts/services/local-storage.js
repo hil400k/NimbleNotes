@@ -17,18 +17,18 @@ angular.module('yapp.services', [])
         create: function(data) {
             var defer = $q.defer();
 
-            store.notes.push(data);
-            store._saveToLocalStorage(store.notes);
-            defer.resolve(store.words);
+            notesService.notes.push(data);
+            notesService._saveToLocalStorage(notesService.notes);
+            defer.resolve(notesService.words);
             return defer.promise;
         },
 
         remove: function(data) {
             var defer = $q.defer();
 
-            store.notes.splice(store.notes.indexOf(data), 1);
-            store._saveToLocalStorage(store.notes);
-            defer.resolve(store.notes);
+            notesService.notes.splice(notesService.notes.indexOf(data), 1);
+            notesService._saveToLocalStorage(notesService.notes);
+            defer.resolve(notesService.notes);
 
             return deferred.promise;
         },
@@ -36,8 +36,8 @@ angular.module('yapp.services', [])
         getAll: function () {
             var deferred = $q.defer();
 
-            angular.copy(store._getFromLocalStorage(), store.notes);
-            deferred.resolve(store.notes);
+            angular.copy(notesService._getFromLocalStorage(), notesService.notes);
+            deferred.resolve(notesService.notes);
 
             return deferred.promise;
         },
@@ -45,10 +45,10 @@ angular.module('yapp.services', [])
         update: function (note, index) {
             var deferred = $q.defer();
 
-            store.notes[index] = note;
+            notesService.notes[index] = note;
 
-            store._saveToLocalStorage(store.notes);
-            deferred.resolve(store.notes);
+            notesService._saveToLocalStorage(notesService.notes);
+            deferred.resolve(notesService.notes);
 
             return deferred.promise;
         }
