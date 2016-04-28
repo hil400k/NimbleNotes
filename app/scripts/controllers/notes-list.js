@@ -8,5 +8,9 @@ angular.module('yapp.controllers')
         $scope.notesCtrl.getNotes();
     }
 
+    self.getListItem = function(id) {
+        return $scope.notesCtrl.notes[id];
+    }
+
     self.init();
   });

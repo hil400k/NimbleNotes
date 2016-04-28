@@ -22,10 +22,9 @@ angular.module('yapp.components', [])
     return {
         restrict: 'E',
         replace: 'false',
-        scope: true,
         templateUrl: 'views/dashboard/note.html',
-        link: function(scope, elem, attrs, ctrl) {
-
+        link: function(scope, elem, attrs) {
+            console.info(scope.vm.getListItem(elem.data('id')));
         }
     }
 });

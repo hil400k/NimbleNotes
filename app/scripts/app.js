@@ -16,8 +16,9 @@
     'snap',
     'ngAnimate'
     ])
- .config(function($stateProvider, $urlRouterProvider) {
+ .config(function($stateProvider, $urlRouterProvider, snapRemoteProvider) {
 
+    snapRemoteProvider.globalOptions.touchToDrag = false;
     $urlRouterProvider.when('/dashboard', '/dashboard/notes');
     $urlRouterProvider.otherwise('/login');
 
