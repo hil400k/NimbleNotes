@@ -24,7 +24,30 @@ angular.module('yapp.components', [])
         replace: 'false',
         templateUrl: 'views/dashboard/note.html',
         link: function(scope, elem, attrs) {
-            console.info(scope.vm.getListItem(elem.data('id')));
+            var noteItem = scope.vm.getListItem(attrs.id),
+                noteItemPriority = parseInt(noteItem.priority);
+
+            setClassToNote();
+
+            function setClassToNote() {
+                switch(noteItemPriority) {
+                    case 1:
+                        elem.addClass('priority-1');
+                        break;
+                    case 2:
+                        elem.addClass('priority-2');
+                        break;
+                    case 3:
+                        elem.addClass('priority-3');
+                        break;
+                    case 4:
+                        elem.addClass('priority-4');
+                        break;
+                    case 5:
+                        elem.addClass('priority-5');
+                        break;
+                }
+            }
         }
     }
 });

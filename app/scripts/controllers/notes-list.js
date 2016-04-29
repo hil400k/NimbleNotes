@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('yapp.controllers')
-  .controller('NotesListCtrl', function($scope, $state) {
+  .controller('NotesListCtrl', function($scope, $state, $filter) {
     var self = this;
 
     self.init = function() {
@@ -9,7 +9,7 @@ angular.module('yapp.controllers')
     }
 
     self.getListItem = function(id) {
-        return $scope.notesCtrl.notes[id];
+        return $filter('getNoteById')($scope.notesCtrl.notes, id);
     }
 
     self.init();

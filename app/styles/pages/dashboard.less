@@ -80,6 +80,7 @@
 }
 
 #notes-list {
+    @note-font-color: #808080;
     .grid {
         overflow: hidden;
         padding: 0.5em 0 0 0.5em;
@@ -103,14 +104,38 @@
                 position: relative;
                 text-align: left;
                 padding: 5px 10px;
-                .note-text {
-                    margin-bottom: 30px;
-                }
                 .note-date {
                     position: absolute;
                     bottom: 0;
                     padding-bottom: 5px;
                 }
+                .note-date {
+                    opacity: 0;
+                    transition: opacity 0.3s;
+                }
+                &:hover .note-date {
+                    opacity: 1;
+                }
+            }
+            .note.priority-1 {
+                background: lighten(@control-color, 10%);
+                color: @note-font-color;
+            }
+            .note.priority-2 {
+                background: @control-color;
+                color: lighten(@note-font-color, 10%);
+            }
+            .note.priority-3 {
+                background: darken(@control-color, 10%);
+                color: lighten(@note-font-color, 70%);
+            }
+            .note.priority-4 {
+                background: darken(@control-color, 20%);
+                color: lighten(@note-font-color, 80%);
+            }
+            .note.priority-5 {
+                background: darken(@control-color, 30%);
+                color: lighten(@note-font-color, 90%);
             }
         }
         li.wide {
@@ -122,7 +147,6 @@
             }
         }
         li > div {
-            background: lighten(@control-color, 10%);
             text-align: center;
             height: 300px;
         }
