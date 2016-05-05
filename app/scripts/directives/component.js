@@ -18,13 +18,14 @@ angular.module('yapp.components', [])
     }
 ])
 
-.directive('note', ['$compile', '$timeout', '$rootScope', function($compile, $timeout, $rootScope) {
+.directive('note', ['$compile', '$timeout', '$injector', function($compile, $timeout, $injector) {
     return {
         restrict: 'E',
         replace: 'false',
         templateUrl: 'views/dashboard/note.html',
         link: function(scope, elem, attrs) {
-            var noteItem = scope.vm.getListItem(attrs.id),
+            var notesService = $injector.get('notesService'),
+                noteItem = notesService.getListItem(attrs.id),
                 noteItemPriority = parseInt(noteItem.priority),
                 notesGrid;
 
@@ -42,14 +43,14 @@ angular.module('yapp.components', [])
                 });
 
                 elem.parent().bind('click', function(e) {
-                    var notesToRemove = scope.notesCtrl.toRemoveList;
+                    var notesToRemove = notesService.nlistToRemove;
 
                     if (!scope.notesCtrl.canChooseForRemoving) {
                         angular.forEach(document.querySelectorAll('.grid .note'), function(item, i) {
                             angular.element(item).removeClass('choosen-note');
                         });
                         elem.addClass('choosen-note');
-                        $rootScope.$broadcast('initNote', noteItem);
+                        notesService.setNote(noteItem);
                     } else {
                         if (!elem.hasClass('choosen-note')) {
                             notesToRemove.push(noteItem.id);

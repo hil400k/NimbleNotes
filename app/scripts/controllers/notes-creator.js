@@ -1,73 +1,37 @@
 'use strict';
 
 angular.module('yapp.controllers')
-  .controller('NotesCreatorCtrl', function($scope, $state, $rootScope, storage) {
+  .controller('NotesCreatorCtrl', function($scope, $state, $rootScope, storage, notesService) {
     var self = this;
 
-    $rootScope.$on('initNote', function(event, data) {
-        $scope.$apply(function() { self.initNote(data); });
-    });
-
     self.init = function() {
-        self.initNote();
+        notesService.setNoteCallback = function() {
+            self.note = notesService.ncurrent;
+        }
+
+        notesService.initNote();
+        self.note = notesService.ncurrent;
+
+//        notesService.initNote();
+//        self.note = notesService.ncurrent;
+//
+//        $scope.$watch(() => notesService.ncurrent, function(newV, oldV) {
+//            self.note = newV;
+//        });
     }
 
-    self.initNote = function(noteItem) {
-        if (noteItem)
-            self.note = {
-                id: noteItem.id,
-                text: noteItem.text,
-                tags: noteItem.tags,
-                name: noteItem.name,
-                priority: noteItem.priority,
-                dateOfCreation: noteItem.dateOfCreation,
-                dateOfEditing: noteItem.dateOfEditing,
-                editingsCount: noteItem.editingsCount,
-                sourceUrl: noteItem.sourceUrl
-            };
-        else
-            self.note = {
-                id: null,
-                text: '',
-                tags: '',
-                name: '',
-                priority: 1,
-                dateOfCreation: null,
-                dateOfEditing: null,
-                editingsCount: 0,
-                sourceUrl: null
-            };
-    }
 
     self.clearValues = function() {
-        self.initNote();
+        notesService.initNote();
     }
-
-//    $scope.$watch(() => this.note, function(newV, oldV) {
-//
-//    });
 
     self.send = function() {
         if (self.note.id) {
-            self.updateNote();
+            notesService.updateNoteAPI();
         } else {
-            self.createNote();
-//            self.initNote();
+            notesService.createNoteAPI();
         }
-        $scope.notesCtrl.getNotes();
-    }
-
-    self.updateNote = function() {
-        storage.update(self.note);
-    }
-
-    self.createNote = function() {
-        var wordsCount = 1;
-
-        self.note.name = self.note.text.split(/\s+/).slice(0,wordsCount).join(' ');
-        self.note.id = self.note.name;
-        self.note.dateOfCreation = self.note.dateOfEditing = new Date().toLocaleString();
-        storage.create(self.note);
+        notesService.getNotesAPI();
     }
 
     self.init();

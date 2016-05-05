@@ -2,26 +2,12 @@
 
 
 angular.module('yapp.controllers')
-  .controller('NotesCtrl', function($scope, $state, storage) {
+  .controller('NotesCtrl', function($scope, $state, storage, notesService) {
     var self = this;
 
-    self.getNotes = function() {
-        storage.getAll()
-        .then(
-            function(data) {
-                angular.forEach(data, function(note, index) {
-                    data.textToDisplay = '';
-                })
-                self.notes = data;
-            },
-            function(error) {
 
-            }
-        )
-    }
-
-    self.toggleChooseForRemovingAvailability = function() {console.info(self.toRemoveList);
-        self.toRemoveList = [];
+    self.toggleChooseForRemovingAvailability = function() {
+//        self.toRemoveList = [];
         angular.forEach(document.querySelectorAll('.grid .note'), function(item, i) {
             angular.element(item).removeClass('choosen-note');
         });
@@ -29,8 +15,6 @@ angular.module('yapp.controllers')
     }
 
     self.init = function() {
-        self.notes = [];
-        self.toRemoveList = [];
         self.canChooseForRemoving = false;
     }
 

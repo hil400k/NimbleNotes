@@ -1,4 +1,4 @@
-angular.module('yapp.services', [])
+angular.module('yapp.services', ['yapp.filters'])
 
 .factory('storage', function($q) {
     var STORAGE_ID = 'notes';
@@ -24,13 +24,35 @@ angular.module('yapp.services', [])
         },
 
         remove: function(data) {
-            var defer = $q.defer();
+            var defer = $q.defer(),
+                indexToRemove,
+                indexesToRemove = [];
 
-            notesService.notes.splice(notesService.notes.indexOf(data), 1);
+            if (typeof data === 'string') {
+                for (var i = 0; i < notesService.notes.length; i++) {
+                    if (notesService.notes[i].id === data) {
+                        indexToRemove = i;
+                        break;
+                    }
+                }
+                notesService.notes.splice(indexToRemove, 1);
+
+            } else if (Array.isArray(data)) {
+                for (var i = 0; i < notesService.notes.length; i++) {
+                    if (notesService.notes[i].id === data) {
+                        indexesToRemove.push(i);
+                    }
+                }
+                for (var i = 0; i < indexesToRemove; i++) {
+                    notesService.notes.splice(indexesToRemove[i], 1);
+                }
+            }
+
+
             notesService._saveToLocalStorage(notesService.notes);
             defer.resolve(notesService.notes);
 
-            return deferred.promise;
+            return defer.promise;
         },
 
         getAll: function () {
