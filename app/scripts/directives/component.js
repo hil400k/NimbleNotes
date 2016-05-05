@@ -18,7 +18,7 @@ angular.module('yapp.components', [])
     }
 ])
 
-.directive('note', ['$compile', '$timeout', function($compile, $timeout) {
+.directive('note', ['$compile', '$timeout', '$rootScope', function($compile, $timeout, $rootScope) {
     return {
         restrict: 'E',
         replace: 'false',
@@ -42,14 +42,22 @@ angular.module('yapp.components', [])
                 });
 
                 elem.parent().bind('click', function(e) {
+                    var notesToRemove = scope.notesCtrl.toRemoveList;
+
                     if (!scope.notesCtrl.canChooseForRemoving) {
                         angular.forEach(document.querySelectorAll('.grid .note'), function(item, i) {
                             angular.element(item).removeClass('choosen-note');
                         });
                         elem.addClass('choosen-note');
+                        $rootScope.$broadcast('initNote', noteItem);
                     } else {
-                        if (!elem.hasClass('choosen-note')) elem.addClass('choosen-note');
-                        else elem.removeClass('choosen-note');
+                        if (!elem.hasClass('choosen-note')) {
+                            notesToRemove.push(noteItem.id);
+                            elem.addClass('choosen-note');
+                        } else {
+                            elem.removeClass('choosen-note');
+                            notesToRemove.splice(notesToRemove.indexOf(noteItem.id), 1);
+                        }
                     }
                 });
             }

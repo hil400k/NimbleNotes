@@ -5,7 +5,6 @@ angular.module('yapp.controllers')
   .controller('NotesCtrl', function($scope, $state, storage) {
     var self = this;
 
-    self.canChooseForRemoving = false;
     self.getNotes = function() {
         storage.getAll()
         .then(
@@ -21,7 +20,8 @@ angular.module('yapp.controllers')
         )
     }
 
-    self.toggleChooseForRemovingAvailability = function() {
+    self.toggleChooseForRemovingAvailability = function() {console.info(self.toRemoveList);
+        self.toRemoveList = [];
         angular.forEach(document.querySelectorAll('.grid .note'), function(item, i) {
             angular.element(item).removeClass('choosen-note');
         });
@@ -30,6 +30,8 @@ angular.module('yapp.controllers')
 
     self.init = function() {
         self.notes = [];
+        self.toRemoveList = [];
+        self.canChooseForRemoving = false;
     }
 
     self.init();

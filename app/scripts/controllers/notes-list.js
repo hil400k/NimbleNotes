@@ -8,12 +8,18 @@ angular.module('yapp.controllers')
         $scope.notesCtrl.getNotes();
     }
 
-    self.gridFocus = function() {
-        console.info('focus');
+    self.removeNotes = function(e) {
+        var DELETE_KEY_CODE = 127;
+
+        if (e.keyCode === DELETE_KEY_CODE) $scope.notesCtrl.removeNotesFromServer(params);
     }
 
     self.getListItem = function(id) {
         return $filter('getNoteById')($scope.notesCtrl.notes, id);
+    }
+
+    self.removeNotesFromServer = function(params) {
+
     }
 
     self.init();

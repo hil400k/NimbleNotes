@@ -42,10 +42,15 @@ angular.module('yapp.services', [])
             return deferred.promise;
         },
 
-        update: function (note, index) {
+        update: function (note) {
             var deferred = $q.defer();
 
-            notesService.notes[index] = note;
+            for (var i = 0; i < notesService.notes.length; i++) {
+                if (notesService.notes[i].id === note.id) {
+                    notesService.notes[i] = note;
+                    break;
+                }
+            }
 
             notesService._saveToLocalStorage(notesService.notes);
             deferred.resolve(notesService.notes);
