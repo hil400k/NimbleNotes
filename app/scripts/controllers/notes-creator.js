@@ -22,6 +22,10 @@ angular.module('yapp.controllers')
         };
     }
 
+    self.clearValues = function() {
+        self.initNote();
+    }
+
 //    $scope.$watch(() => this.note.text, function(newV, oldV) {
 //
 //    });

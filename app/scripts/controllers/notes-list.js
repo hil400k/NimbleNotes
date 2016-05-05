@@ -8,6 +8,10 @@ angular.module('yapp.controllers')
         $scope.notesCtrl.getNotes();
     }
 
+    self.gridFocus = function() {
+        console.info('focus');
+    }
+
     self.getListItem = function(id) {
         return $filter('getNoteById')($scope.notesCtrl.notes, id);
     }

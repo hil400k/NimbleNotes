@@ -79,6 +79,12 @@
     padding-left: 60px;
 }
 
+#note-creator {
+    .btn {
+        outline: none;
+    }
+}
+
 #notes-list {
     @note-font-color: #808080;
     .grid {
@@ -87,6 +93,7 @@
         max-width: 76em;
         margin: 0 auto;
         list-style-type: none;
+        outline: none;
         li {
             padding: 0 0.5em 0.5em 0;
             @media all and (min-width: 27em) {
@@ -101,21 +108,41 @@
             }
 
             .note {
+                cursor: pointer;
                 position: relative;
                 text-align: left;
                 padding: 5px 10px;
+                overflow: hidden;
                 .note-date {
                     position: absolute;
                     bottom: 0;
                     padding-bottom: 5px;
-                }
-                .note-date {
                     opacity: 0;
                     transition: opacity 0.3s;
+                    line-height: 2;
+                }
+                .note-text {
+                    height: 100%;
+                    overflow: hidden;
+                    transition: height 0.1s;
+                }
+                .note-name {
+                    padding-left: 5px;
+                    padding-right: 5px;
+                    background: red;
+                    border-radius: 4px;
+                    font-weight: 800;
+                    background: rgba(0, 0, 0, 0.2);
                 }
                 &:hover .note-date {
                     opacity: 1;
                 }
+                &:hover .note-text {
+                    height: 270px;
+                }
+            }
+            .note.choosen-note {
+                border: 3px solid rgba(0, 0, 0, 0.3);
             }
             .note.priority-1 {
                 background: lighten(@control-color, 10%);

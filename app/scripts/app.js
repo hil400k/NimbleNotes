@@ -14,6 +14,7 @@
     'yapp.components',
     'ui.router',
     'snap',
+    'dibari.angular-ellipsis',
     'ngAnimate'
     ])
  .config(function($stateProvider, $urlRouterProvider, snapRemoteProvider) {

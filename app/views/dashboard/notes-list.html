@@ -1,4 +1,4 @@
-<ul class="grid">
+<ul class="grid" ng-keypress="vm.gridFocus()" tabindex="0">
     <li ng-repeat="noteItem in notesCtrl.notes">
         <note data-id="{{noteItem.id}}"></note>
     </li>

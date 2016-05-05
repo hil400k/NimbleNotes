@@ -18,16 +18,53 @@ angular.module('yapp.components', [])
     }
 ])
 
-.directive('note', function() {
+.directive('note', ['$compile', '$timeout', function($compile, $timeout) {
     return {
         restrict: 'E',
         replace: 'false',
         templateUrl: 'views/dashboard/note.html',
         link: function(scope, elem, attrs) {
             var noteItem = scope.vm.getListItem(attrs.id),
-                noteItemPriority = parseInt(noteItem.priority);
+                noteItemPriority = parseInt(noteItem.priority),
+                notesGrid;
 
             setClassToNote();
+            highlightName();
+            setEvents();
+
+            // add helper/loader
+
+            function setEvents() {
+                elem.parent().bind('mouseover mouseout', function(e) {
+                    $timeout(function () {
+                        $compile(elem.contents())(scope);
+                    }, 100);
+                });
+
+                elem.parent().bind('click', function(e) {
+                    if (!scope.notesCtrl.canChooseForRemoving) {
+                        angular.forEach(document.querySelectorAll('.grid .note'), function(item, i) {
+                            angular.element(item).removeClass('choosen-note');
+                        });
+                        elem.addClass('choosen-note');
+                    } else {
+                        if (!elem.hasClass('choosen-note')) elem.addClass('choosen-note');
+                        else elem.removeClass('choosen-note');
+                    }
+                });
+            }
+
+
+            function highlightName() {
+                var text = noteItem.text,
+                    highligting = '<span class="note-name">',
+                    output;
+
+                output = highligting + [text.slice(0, noteItem.name.length), '</span>', text.slice(noteItem.name.length)].join('');
+
+                noteItem.textToDisplay = output;
+                // $sce || ngSatinize
+            }
 
             function setClassToNote() {
                 switch(noteItemPriority) {
@@ -50,4 +87,4 @@ angular.module('yapp.components', [])
             }
         }
     }
-});
+}]);
