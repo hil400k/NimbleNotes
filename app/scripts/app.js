@@ -49,13 +49,6 @@
         controller: 'NotesCtrl',
         controllerAs: 'notesCtrl'
     })
-    .state('note', {
-        url: '/notes/:id',
-        parent: 'dashboard',
-        templateUrl: 'views/dashboard/note.html',
-        controller: 'NoteCtrl',
-        controllerAs: 'note'
-    })
     .state('settings', {
         url: '/settings',
         parent: 'dashboard',

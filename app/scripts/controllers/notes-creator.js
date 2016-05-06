@@ -5,13 +5,11 @@ angular.module('yapp.controllers')
     var self = this;
 
     self.init = function() {
-        notesService.setNoteCallback = function() {
-            self.note = notesService.ncurrent;
-            $scope.notesCtrl.editingMode = true;
-        }
-
         notesService.initNote();
         self.note = notesService.ncurrent;
+        notesService.setNoteCallback = function() {
+            self.note = notesService.ncurrent;
+        }
     }
 
 
@@ -26,6 +24,7 @@ angular.module('yapp.controllers')
             notesService.updateNoteAPI();
         } else {
             notesService.createNoteAPI();
+            $scope.notesCtrl.editingMode = false;
         }
         notesService.getNotesAPI();
     }

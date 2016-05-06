@@ -24,13 +24,14 @@ angular.module('yapp.components', [])
         replace: false,
         link: function(scope, elem, attrs) {
             var notesService = $injector.get('notesService'),
-                el = angular.element(elem);
+                el = angular.element(elem[0]);
 
             $rootScope.$on('clear-values', function() {
-                angular.forEach(el.querySelectorAll('.note'), function(item, i) {
+                angular.forEach(el.children().children(), function(item, i) {
                     angular.element(item).removeClass('choosen-note');
                 });
             });
+        }
     }
 }])
 
@@ -68,6 +69,7 @@ angular.module('yapp.components', [])
                         elem.addClass('choosen-note');
                         scope.$apply(function() {
                             notesService.setNote(noteItem);
+                            scope.notesCtrl.editingMode = true;
                         });
                     } else {
                         if (!elem.hasClass('choosen-note')) {
