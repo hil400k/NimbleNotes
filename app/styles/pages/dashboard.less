@@ -42,6 +42,42 @@
   margin-top: 0;
 }
 
+#notificator {
+    display: block;
+    .notificator-content {
+        height: 0;
+        transition: height 0.3s;
+        overflow: hidden;
+    }
+    .notificator-content.opened {
+        margin: 10px 0 30px 0;
+        height: 40px;
+        .spinner {
+          width: 30px;
+          height: 30px;
+          margin: auto;
+          border-width: 4px;
+          border-style: solid;
+          border-color: #fff #9b9b9b #9b9b9b;
+          border-radius: 50%;
+          -webkit-animation: spinning linear 1s infinite;
+        }
+
+        @keyframes spinning {
+          from {
+             -webkit-transform: rotate(0deg);
+          }
+          to {
+             -webkit-transform: rotate(360deg);
+          }
+        }
+    }
+    .notificator-content.closed {
+        height: 0;
+    }
+}
+
+
 
     /*
      * Placeholder dashboard ideas

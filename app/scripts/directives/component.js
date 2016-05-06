@@ -35,6 +35,17 @@ angular.module('yapp.components', [])
     }
 }])
 
+.directive('notificator', ['$injector', function($injector) {
+    return {
+        restrict: 'E',
+        replace: false,
+        templateUrl: 'views/dashboard/notificator.html',
+        link: function(scope, elem, attrs) {
+            var a = 10;
+        }
+    }
+}])
+
 .directive('note', ['$compile', '$timeout', '$injector', function($compile, $timeout, $injector) {
     return {
         restrict: 'E',
@@ -49,8 +60,6 @@ angular.module('yapp.components', [])
             setClassToNote();
             highlightName();
             setEvents();
-
-            // add helper/loader
 
             function setEvents() {
                 elem.parent().bind('mouseover mouseout', function(e) {
