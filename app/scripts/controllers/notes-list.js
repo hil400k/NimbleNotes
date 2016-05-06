@@ -8,13 +8,22 @@ angular.module('yapp.controllers')
         notesService.getNotesAPICallback = function() {
             self.notes = notesService.nlist;
         }
+        notesService.removeNotesAPICallback = function() {
+            $scope.notesCtrl.canChooseForRemoving = false;
+        }
         notesService.getNotesAPI();
     }
 
     self.removeNotes = function(e) {
         var DELETE_KEY_CODE = 127;
 
-        if (e.keyCode === DELETE_KEY_CODE) notesService.removeNotesAPI(notesService.ncurrent.id);
+        if (e.keyCode === DELETE_KEY_CODE) {
+            if ($scope.notesCtrl.canChooseForRemoving) {
+                notesService.removeNotesAPI(notesService.nlistToRemove);
+            } else {
+                notesService.removeNotesAPI(notesService.ncurrent.id);
+            }
+        }
     }
 
     self.init();

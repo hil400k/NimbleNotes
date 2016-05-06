@@ -7,22 +7,18 @@ angular.module('yapp.controllers')
     self.init = function() {
         notesService.setNoteCallback = function() {
             self.note = notesService.ncurrent;
+            $scope.notesCtrl.editingMode = true;
         }
 
         notesService.initNote();
         self.note = notesService.ncurrent;
-
-//        notesService.initNote();
-//        self.note = notesService.ncurrent;
-//
-//        $scope.$watch(() => notesService.ncurrent, function(newV, oldV) {
-//            self.note = newV;
-//        });
     }
 
 
     self.clearValues = function() {
         notesService.initNote();
+        $scope.notesCtrl.editingMode = false;
+        $rootScope.$broadcast('clear-values');
     }
 
     self.send = function() {

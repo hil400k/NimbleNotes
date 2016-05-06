@@ -38,13 +38,14 @@ angular.module('yapp.services', ['yapp.filters'])
                 notesService.notes.splice(indexToRemove, 1);
 
             } else if (Array.isArray(data)) {
-                for (var i = 0; i < notesService.notes.length; i++) {
-                    if (notesService.notes[i].id === data) {
-                        indexesToRemove.push(i);
+                for(var i = 0; i < data.length; i++) {
+                    for (var j = 0; j < notesService.notes.length; j++) {
+                        if (data[i] === notesService.notes[j].id) {
+                            indexToRemove = j;
+                            break;
+                        }
                     }
-                }
-                for (var i = 0; i < indexesToRemove; i++) {
-                    notesService.notes.splice(indexesToRemove[i], 1);
+                    notesService.notes.splice(indexToRemove, 1);
                 }
             }
 

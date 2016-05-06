@@ -18,6 +18,22 @@ angular.module('yapp.components', [])
     }
 ])
 
+.directive('notesGrid', ['$injector', '$rootScope', function($injector, $rootScope) {
+    return {
+        restrict: 'A',
+        replace: false,
+        link: function(scope, elem, attrs) {
+            var notesService = $injector.get('notesService'),
+                el = angular.element(elem);
+
+            $rootScope.$on('clear-values', function() {
+                angular.forEach(el.querySelectorAll('.note'), function(item, i) {
+                    angular.element(item).removeClass('choosen-note');
+                });
+            });
+    }
+}])
+
 .directive('note', ['$compile', '$timeout', '$injector', function($compile, $timeout, $injector) {
     return {
         restrict: 'E',
@@ -50,7 +66,9 @@ angular.module('yapp.components', [])
                             angular.element(item).removeClass('choosen-note');
                         });
                         elem.addClass('choosen-note');
-                        notesService.setNote(noteItem);
+                        scope.$apply(function() {
+                            notesService.setNote(noteItem);
+                        });
                     } else {
                         if (!elem.hasClass('choosen-note')) {
                             notesToRemove.push(noteItem.id);

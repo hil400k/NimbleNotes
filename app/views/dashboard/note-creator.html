@@ -23,7 +23,10 @@
         </button>
      </div>
       <div class="col-sm-2">
-        <button type="submit" id="create-new-note" class="btn btn-block create-note-btn">create</button>
+        <button type="submit" id="create-new-note" class="btn btn-block create-note-btn">
+            <span ng-show="!notesCtrl.editingMode">create</span>
+            <span ng-show="notesCtrl.editingMode">edit</span>
+        </button>
      </div>
      <div class="col-sm-1">
          <button type="button" id="reset-note-btn" class="btn btn-block reset-note-btn" ng-click="vmnc.clearValues()"><span class="glyphicon glyphicon-remove"></span></button>

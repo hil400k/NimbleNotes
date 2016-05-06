@@ -7,7 +7,7 @@ angular.module('yapp.controllers')
 
 
     self.toggleChooseForRemovingAvailability = function() {
-//        self.toRemoveList = [];
+        notesService.nlistToRemoveInit();
         angular.forEach(document.querySelectorAll('.grid .note'), function(item, i) {
             angular.element(item).removeClass('choosen-note');
         });
@@ -16,6 +16,7 @@ angular.module('yapp.controllers')
 
     self.init = function() {
         self.canChooseForRemoving = false;
+        self.editingMode = false;
     }
 
     self.init();

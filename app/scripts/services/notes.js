@@ -39,6 +39,10 @@ angular.module('yapp.services')
         if (ns.setNoteCallback) ns.setNoteCallback();
     };
 
+    ns.nlistToRemoveInit = function() {
+        ns.nlistToRemove = [];
+    }
+
     ns.setNote = function(noteItem) {
         ns.ncurrent = noteItem;
         if (ns.setNoteCallback) ns.setNoteCallback();
@@ -47,6 +51,8 @@ angular.module('yapp.services')
     // callbacks
 
     ns.getNotesAPICallback = null;
+    ns.setNoteCallback = null;
+    ns.removeNotesAPICallback = null;
     ns.setNoteCallback = null;
 
     // APIs
@@ -75,7 +81,7 @@ angular.module('yapp.services')
         var wordsCount = 1;
 
         ns.ncurrent.name = ns.ncurrent.text.split(/\s+/).slice(0, wordsCount).join(' ');
-        ns.ncurrent.id = ns.ncurrent.name;
+        ns.ncurrent.id = ns.ncurrent.name + getRandomArbitrary(0, 100000);
         ns.ncurrent.dateOfCreation = ns.ncurrent.dateOfEditing = new Date().toLocaleString();
         storage.create(ns.ncurrent);
         ns.initNote();
@@ -85,10 +91,15 @@ angular.module('yapp.services')
         if (!params) return;
 
         storage.remove(params);
+        ns.nlistToRemoveInit();
+        if (ns.removeNotesAPICallback) ns.removeNotesAPICallback();
         ns.initNote();
         ns.getNotesAPI();
-
     };
+
+    function getRandomArbitrary(min, max) {
+      return Math.random() * (max - min) + min;
+    }
 
     return ns;
 })
