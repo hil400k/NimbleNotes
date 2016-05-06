@@ -9,13 +9,17 @@ angular.module('yapp.controllers')
         self.note = notesService.ncurrent;
         notesService.setNoteCallback = function() {
             self.note = notesService.ncurrent;
+            $scope.notesCtrl.editingMode = true;
+        }
+        notesService.initNoteCallback = function() {
+            self.note = notesService.ncurrent;
+            $scope.notesCtrl.editingMode = false;
         }
     }
 
-
     self.clearValues = function() {
         notesService.initNote();
-        $scope.notesCtrl.editingMode = false;
+        $scope.notesCtrl.canChooseForRemoving = false;
         $rootScope.$broadcast('clear-values');
     }
 

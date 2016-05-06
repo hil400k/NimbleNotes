@@ -17,7 +17,7 @@
         </tags-input>
      </div>
      <div class="col-sm-4">
-        <button id="remove-few-notes" type="button" name="remove" class="btn btn-block remove-notes-btn" ng-click="notesCtrl.toggleChooseForRemovingAvailability()">
+        <button id="remove-few-notes" type="button" name="remove" class="btn btn-block remove-notes-btn" ng-class="{ danger: notesCtrl.canChooseForRemoving}" ng-click="notesCtrl.toggleChooseForRemovingAvailability()">
             <span ng-show="!notesCtrl.canChooseForRemoving">choose to remove</span>
             <span ng-show="notesCtrl.canChooseForRemoving">clear choosen</span>
         </button>

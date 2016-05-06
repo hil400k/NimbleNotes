@@ -11,8 +11,27 @@ angular.module('yapp.services')
         return $filter('getNoteById')(ns.nlist, id);
     };
 
-    ns.initNote = function(noteItem) {
-        if (noteItem)
+    ns.initNote = function() {
+        ns.ncurrent = {
+            id: null,
+            text: '',
+            tags: '',
+            name: '',
+            priority: 1,
+            dateOfCreation: null,
+            dateOfEditing: null,
+            editingsCount: 0,
+            sourceUrl: null
+        };
+        if (ns.initNoteCallback) ns.initNoteCallback();
+    };
+
+    ns.nlistToRemoveInit = function() {
+        ns.nlistToRemove = [];
+    }
+
+    ns.setNote = function(noteItem) {
+        if (noteItem) {
             ns.ncurrent = {
                 id: noteItem.id,
                 text: noteItem.text,
@@ -24,28 +43,8 @@ angular.module('yapp.services')
                 editingsCount: noteItem.editingsCount,
                 sourceUrl: noteItem.sourceUrl
             };
-        else
-            ns.ncurrent = {
-                id: null,
-                text: '',
-                tags: '',
-                name: '',
-                priority: 1,
-                dateOfCreation: null,
-                dateOfEditing: null,
-                editingsCount: 0,
-                sourceUrl: null
-            };
-        if (ns.setNoteCallback) ns.setNoteCallback();
-    };
-
-    ns.nlistToRemoveInit = function() {
-        ns.nlistToRemove = [];
-    }
-
-    ns.setNote = function(noteItem) {
-        ns.ncurrent = noteItem;
-        if (ns.setNoteCallback) ns.setNoteCallback();
+            if (ns.setNoteCallback) ns.setNoteCallback();
+        }
     }
 
     // callbacks
@@ -54,6 +53,7 @@ angular.module('yapp.services')
     ns.setNoteCallback = null;
     ns.removeNotesAPICallback = null;
     ns.setNoteCallback = null;
+    ns.initNoteCallback = null;
 
     // APIs
 

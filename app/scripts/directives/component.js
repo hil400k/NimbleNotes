@@ -69,7 +69,6 @@ angular.module('yapp.components', [])
                         elem.addClass('choosen-note');
                         scope.$apply(function() {
                             notesService.setNote(noteItem);
-                            scope.notesCtrl.editingMode = true;
                         });
                     } else {
                         if (!elem.hasClass('choosen-note')) {
