@@ -15,9 +15,10 @@ angular.module('yapp.controllers')
     }
 
     self.removeNotes = function(e) {
-        var DELETE_KEY_CODE = 127;
+        var DELETE_KEY_CODE_LINUX = 127,
+            DELETE_KEY_CODE_WIN = 46;
 
-        if (e.keyCode === DELETE_KEY_CODE) {
+        if (e.keyCode === DELETE_KEY_CODE_LINUX || e.keyCode === DELETE_KEY_CODE_WIN) {
             if ($scope.notesCtrl.canChooseForRemoving) {
                 notesService.removeNotesAPI(notesService.nlistToRemove);
             } else {

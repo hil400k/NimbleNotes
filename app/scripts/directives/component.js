@@ -41,7 +41,28 @@ angular.module('yapp.components', [])
         replace: false,
         templateUrl: 'views/dashboard/notificator.html',
         link: function(scope, elem, attrs) {
-            var a = 10;
+            var notificatorService = $injector.get('notificatorService'),
+                messageBox = elem.children().children().eq(1).children(),
+                loader = elem.children().children().eq(0),
+                notification = elem.children().children().eq(1);
+
+            notificatorService.open = function(message) {
+                if (message) {
+                    messageBox.text(message);
+                    loader.css({display: 'none'});
+                    notification.css({display: 'block'});
+                } else {
+                    notification.css({display: 'none'});
+                    loader.css({display: 'block'});
+                }
+                elem.children().addClass('opened');
+                notificatorService.state = true;
+            }
+
+            notificatorService.close = function() {
+                elem.children().removeClass('opened');
+                notificatorService.state = false;
+            }
         }
     }
 }])

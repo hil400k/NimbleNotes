@@ -2,7 +2,7 @@
 
 
 angular.module('yapp.controllers')
-  .controller('NotesCtrl', function($scope, $state, storage, notesService) {
+  .controller('NotesCtrl', function($scope, $state, storage, notesService, notificatorService) {
     var self = this;
 
 
@@ -17,10 +17,12 @@ angular.module('yapp.controllers')
     }
 
     self.disableChooseForRemoving = function() {
+        notificatorService.close();
         self.canChooseForRemoving = false;
     }
 
     self.enableChooseForRemoving = function() {
+        notificatorService.open('Click "delete" button to remove choosen');
         self.canChooseForRemoving = true;
     }
 

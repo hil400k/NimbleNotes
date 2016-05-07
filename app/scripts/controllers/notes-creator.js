@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('yapp.controllers')
-  .controller('NotesCreatorCtrl', function($scope, $state, $rootScope, storage, notesService) {
+  .controller('NotesCreatorCtrl', function($scope, $state, $rootScope, storage, notesService, notificatorService) {
     var self = this;
 
     self.init = function() {
@@ -19,7 +19,7 @@ angular.module('yapp.controllers')
 
     self.clearValues = function() {
         notesService.initNote();
-        $scope.notesCtrl.canChooseForRemoving = false;
+        $scope.notesCtrl.disableChooseForRemoving();
         $rootScope.$broadcast('clear-values');
     }
 
@@ -32,6 +32,7 @@ angular.module('yapp.controllers')
         }
         notesService.getNotesAPI();
     }
+
 
     self.init();
 
