@@ -1,11 +1,5 @@
-<ul class="grid" ng-click="vm.click()" ng-keydown="vm.removeNotes($event)" tabindex="0" notes-grid>
-    <li ng-repeat="noteItem in vm.notes">
+<ul class="grid" ng-keydown="vm.removeNotes($event)" tabindex="0" notes-grid>
+    <li class="grid-li" ng-repeat="noteItem in vm.notes">
         <note data-id="{{noteItem.id}}"></note>
     </li>
 </ul>
-
-
-
-
-
-

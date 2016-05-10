@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('yapp.controllers')
-  .controller('NotesListCtrl', function($scope, $state, $filter, notesService) {
+  .controller('NotesListCtrl', function($scope, $state, $filter, notesService, notificatorService) {
     var self = this;
 
     self.init = function() {
@@ -14,6 +14,7 @@ angular.module('yapp.controllers')
         notesService.getNotesAPI();
     }
 
+
     self.removeNotes = function(e) {
         var DELETE_KEY_CODE_LINUX = 127,
             DELETE_KEY_CODE_WIN = 46;
@@ -24,6 +25,7 @@ angular.module('yapp.controllers')
             } else {
                 notesService.removeNotesAPI(notesService.ncurrent.id);
             }
+            notificatorService.close();
         }
     }
 

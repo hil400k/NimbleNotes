@@ -1,8 +1,17 @@
 'use strict';
 
 angular.module('yapp.controllers')
-  .controller('SettingsCtrl', function($scope, $state) {
+  .controller('SettingsCtrl', function($scope, $state, settingsService) {
+    var self = this;
 
+    self.init = function() {
+        self.settings = settingsService.get();
 
+        self.save = function() {
+
+        }
+    }
+
+    self.init();
 
   });

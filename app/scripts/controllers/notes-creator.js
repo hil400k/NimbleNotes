@@ -24,12 +24,17 @@ angular.module('yapp.controllers')
     }
 
     self.send = function() {
+        if (!self.note.text) {
+            notificatorService.open('Note should have some text!');
+            return;
+        }
         if (self.note.id) {
             notesService.updateNoteAPI();
         } else {
             notesService.createNoteAPI();
             $scope.notesCtrl.editingMode = false;
         }
+        notificatorService.close();
         notesService.getNotesAPI();
     }
 

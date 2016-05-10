@@ -1,4 +1,4 @@
-<div>
+<div id="settings-page">
 	<snap-drawer>
 		<div class="snap-menu">
 			<div class="sidebar-header text-center">
@@ -25,7 +25,24 @@
 		</div>
 		<div class="jumbotron">
 			<div class="container">
-				
+				<div class="settings-block">
+				    <h3>Settings</h3>
+				    <form id="settings-form" role="form" ng-submit="settings.save()">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="settings.settings.defaultTag" placeholder="Enter default tagname">
+                        </div>
+                        <div class="form-group">
+                            <label class="instructions">
+                            Enter count of days after which notes will have "archive" tag <br>
+                            Notes with archive tag is available by filtering with "archive" tag
+                            </label>
+                            <input type="text" class="form-control" ng-model="settings.settings.daysToArchive" placeholder="Enter count">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" id="settings-submit" class="btn btn-block reset-note-btn"><span>Save</span></button>
+                        </div>
+                    </form>
+				</div>
 			</div>
 		</div>
 	</snap-content>	

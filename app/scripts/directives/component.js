@@ -89,7 +89,7 @@ angular.module('yapp.components', [])
                     }, 100);
                 });
 
-                elem.parent().bind('click', function(e) {
+                elem.parent().on('click', function(e) {
                     var notesToRemove = notesService.nlistToRemove;
 
                     if (!scope.notesCtrl.canChooseForRemoving) {
@@ -120,8 +120,7 @@ angular.module('yapp.components', [])
 
                 output = highligting + [text.slice(0, noteItem.name.length), '</span>', text.slice(noteItem.name.length)].join('');
 
-                noteItem.textToDisplay = output;
-                // $sce || ngSatinize
+                noteItem.textToDisplay = text;
             }
 
             function setClassToNote() {

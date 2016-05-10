@@ -1,15 +1,53 @@
 <div>
 	<snap-drawer snap-id="'notes'">
 		<div class="snap-menu">
-			<div class="sidebar-header text-center">
-<!--				<img src="images/flat-avatar.png" alt="" class="sidebar-img img-circle">-->
-			</div>
 			<ul class="snap-ul">
 				<li ng-class="{active: $state.includes('notes')}"><a ui-sref="notes">NOTES</a></li>
 				<li ng-class="{active: $state.includes('settings')}"><a ui-sref="settings">SETTINGS</a></li>
 				<li ng-class="{active: $state.includes('about')}"><a ui-sref="about">ABOUT</a></li>
 				<li><a ui-sref="login">LOGOUT</a></li>
 			</ul>
+			<div class="notes-filters" ng-controller="NotesFilters as nf">
+                <form>
+                    <div class="filter-item">
+                          <button class="default-filters-button btn" ng-click="nf.showDefault();">RESET</button>
+                    </div>
+                    <p>Notes Sorting</p>
+                    <div class="radio">
+                        <div class="filter-item">
+                              <span><input type="radio" value="freequency" id="freequency" ng-model="nf.requestedListParams.sortCriteria" name="radio"></span>
+                              <label for="freequency">Editing Freequency</label>
+                        </div>
+                        <div class="filter-item">
+                              <span><input type="radio" value="creation" id="creation-date" ng-model="nf.requestedListParams.sortCriteria" name="radio"></span>
+                              <label for="creation-date">Creation Date</label>
+                        </div>
+                        <div class="filter-item">
+                              <span><input type="radio" value="reading" id="reading-date" ng-model="nf.requestedListParams.sortCriteria" name="radio"></span>
+                              <label for="reading-date">Reading Date</label>
+                        </div>
+                    </div>
+                    <div class="filter-item">
+                       <p>Notes Priority</p>
+                        <div class="stars">
+                            <input type="radio" ng-model="nf.requestedListParams.priority" name="star" value="1" class="star-1" id="filter-star-1" />
+                            <label class="star-1" for="filter-star-1"></label>
+                            <input type="radio" ng-model="nf.requestedListParams.priority" name="star" value="2" class="star-2" id="filter-star-2" />
+                            <label class="star-2" for="filter-star-2"></label>
+                            <input type="radio" ng-model="nf.requestedListParams.priority" name="star" value="3" class="star-3" id="filter-star-3" />
+                            <label class="star-3" for="filter-star-3"></label>
+                            <input type="radio" ng-model="nf.requestedListParams.priority" name="star" value="4" class="star-4" id="filter-star-4" />
+                            <label class="star-4" for="filter-star-4"></label>
+                            <input type="radio" ng-model="nf.requestedListParams.priority" name="star" value="5" class="star-5" id="filter-star-5" />
+                            <label class="star-5" for="filter-star-5"></label>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="filter-item">
+                        <input placeholder="Type tagname here ..." type="text" ng-model="nf.requestedListParams.tag" ng-change="nf.setTag()" id="tags-filter">
+                    </div>
+			    </form>
+			</div>
 		</div>
 	</snap-drawer>
 	<snap-dragger></snap-dragger>

@@ -57,7 +57,7 @@ angular.module('yapp.services')
 
     // APIs
 
-    ns.getNotesAPI = function() {
+    ns.getNotesAPI = function(requestParams) {
         storage.getAll()
         .then(
             function(data) {

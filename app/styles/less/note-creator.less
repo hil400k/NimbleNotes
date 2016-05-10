@@ -7,6 +7,17 @@
 @control-color: rgb(221, 221, 221);
 
 #note-creator {
+#message {
+    color: @note-font-color;
+    height: auto !important;
+    text-align: left;
+    * {
+        font-size: 14px;
+    }
+    .ql-format-group {
+        margin-right: 0;
+    }
+}
 
 .centered {
   margin: 0 auto;
@@ -77,11 +88,6 @@ form#note-creation-form {
   border-bottom: 1px solid @control-color;
 }
 
-textarea#message {
-//  min-height: 100px;
-  resize: vertical;
-  overflow: hidden;
-}
 
 button#remove-few-notes,
 button#create-new-note {
