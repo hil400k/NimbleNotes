@@ -2,8 +2,8 @@
 		<div class="form-content">
 
 		  <ul class="nav nav-pills">
-            <li ng-class="{active: login.loginTab}"><a ng-click="login.toLogin();" href="javascript:void(0)">Login</a></li>
-            <li ng-class="{active: !login.loginTab}"><a ng-click="login.toRegister();" href="javascript:void(0)">Register</a></li>
+            <li class="auth-poll" ng-class="{active: login.loginTab}"><a ng-click="login.toLogin();" href="javascript:void(0)">Login</a></li>
+            <li class="auth-poll" ng-class="{active: !login.loginTab}"><a ng-click="login.toRegister();" href="javascript:void(0)">Register</a></li>
           </ul>
 
             <div class="tab-content">
@@ -22,6 +22,11 @@
                             <button type="submit" class="btn btn-default login">LOGIN</button>
                         </div>
                     </div>
+                    <br>
+                    <p>Enter email and click <span class="reset-password">here</span> to reset password</p>
+                    <br>
+                    <p>Prefer Login with Google: <button type="button" class="btn btn-default google-login pull-right">GOOGLE login</button></p>
+                    <hr>
                     </form>
                 </div>
 
@@ -37,9 +42,14 @@
                             </div>
                         </div>
                         <div class="button-container">
-                            <button type="submit" class="btn btn-default login">Register</button>
+                            <button type="submit" class="btn btn-default login">REGISTER</button>
                         </div>
                     </div>
+                    <br>
+                    <br>
+                    <br>
+                    <p>Prefer Login with Google: <button type="button" class="btn btn-default google-register pull-right">GOOGLE registration</button></p>
+                    <hr>
                     </form>
                 </div>
           </div>

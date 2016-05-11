@@ -2,10 +2,10 @@
 	<snap-drawer snap-id="'notes'">
 		<div class="snap-menu">
 			<ul class="snap-ul">
-				<li ng-class="{active: $state.includes('notes')}"><a ui-sref="notes">NOTES</a></li>
-				<li ng-class="{active: $state.includes('settings')}"><a ui-sref="settings">SETTINGS</a></li>
-				<li ng-class="{active: $state.includes('about')}"><a ui-sref="about">ABOUT</a></li>
-				<li><a ui-sref="login">LOGOUT</a></li>
+				<li ng-class="{active: dashboard.$state.includes('notes')}"><a ui-sref="notes">NOTES</a></li>
+				<li ng-class="{active: dashboard.$state.includes('settings')}"><a ui-sref="settings">SETTINGS</a></li>
+				<li ng-class="{active: dashboard.$state.includes('about')}"><a ui-sref="about">ABOUT</a></li>
+				<li><a href="javascript:void(0)" class="logout" ng-click="dashboard.doLogout();">LOGOUT</a></li>
 			</ul>
 			<div class="notes-filters" ng-controller="NotesFilters as nf">
                 <form>

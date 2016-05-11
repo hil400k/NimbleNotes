@@ -1,13 +1,8 @@
 angular.module('yapp.services')
 
-.service('settingsService', function() {
+.service('settingsService', function($firebaseObject) {
     var settingsService = {},
         settings = {};
-
-    settings = {
-        daysToArchive: null,
-        defaultTag: null
-    }
 
     settingsService.set = function(newSettings) {
         angular.copy(newSettings, settings);
@@ -16,6 +11,15 @@ angular.module('yapp.services')
     settingsService.get = function() {
         return settings;
     }
+
+    settingsService.getDefault = function() {
+        return {
+            daysToArchive: '',
+            defaultTag: ''
+        };
+    }
+
+    settings = settingsService.getDefault();
 
     return settingsService;
 });

@@ -70,9 +70,9 @@
      $rootScope.$on('$stateChangeStart', function(event, toState) {
          var loggedInUser = userService.getLoggedInUser();
 
-         if (!loggedInUser && toState.name !== 'login') {
-             event.preventDefault();
-             $state.go('login');
-         }
+//         if (!loggedInUser && toState.name !== 'login') {
+//             event.preventDefault();
+//             $state.go('login');
+//         }
      });
  })

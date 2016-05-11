@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('yapp.controllers')
-  .controller('LoginCtrl', function($location, $state, authService, userService) {
+  .controller('LoginCtrl', function($location, $state, authService, userService, settingsService) {
     var self = this;
 
     self.init = function() {
@@ -28,14 +28,14 @@ angular.module('yapp.controllers')
         self.saveUser = function(userData) {
             var user = userService.newUserRef(userData);
 
-            user.username = self.loginUser.username;
             user.email = self.loginUser.email;
+            user.password = self.loginUser.password;
+            user.settings = settingsService.getDefault();
 
             user.$save().then(function(response) {
                 self.loginUser = {
                     email: null,
-                    password: null,
-                    username: null
+                    password: null
                 };
             }, function() {
                 console.warn('Saving User Error');
