@@ -1,35 +1,49 @@
 <div class="login-page">
-	<div class="img-container">
-		<div class="text-center pull-right photo">
-				<h1>LAZY<br/ > <span>NOTES</span></h1>
-        </div>
-		</div>
-		
 		<div class="form-content">
-			<form role="form" class="bottom-75" ng-submit="submit()">
-			<div class="table-form">
-				<div class="form-groups">
-					<div class="form-group">
-						<input type="text" class="form-control input-lg" id="" placeholder="EMAIL">
-					</div>
-					<div class="form-group">
-						<input type="password" class="form-control input-lg" id="" placeholder="PASSWORD">
-					</div>
-					
-						
-				</div>	
-				<div class="button-container">
-					<button type="submit" class="btn btn-default login"><img src="images/arrow.png" alt=""></button>
-				</div>
-			</div>
-			<div class="remember">
-				<label class="checkbox1" for="Option"> 
-					<input id="Option" type="checkbox" class="">
-					<span></span>
-				</label>
-				remember me
-			</div>			
-			</form>
+
+		  <ul class="nav nav-pills">
+            <li ng-class="{active: login.loginTab}"><a ng-click="login.toLogin();" href="javascript:void(0)">Login</a></li>
+            <li ng-class="{active: !login.loginTab}"><a ng-click="login.toRegister();" href="javascript:void(0)">Register</a></li>
+          </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane" ng-class="{active: login.loginTab}">
+                  <form role="form" class="margin-top-100" id="loginForm" ng-submit="login.doLogin();">
+                    <div class="table-form">
+                        <div class="form-groups">
+                            <div class="form-group">
+                                <input type="email" ng-model="login.loginUser.email" class="form-control input-lg" id="" required placeholder="EMAIL">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" ng-model="login.loginUser.password" pattern=".{8,}" title="8 characters minimum" class="form-control input-lg" id="" required placeholder="PASSWORD">
+                            </div>
+                        </div>
+                        <div class="button-container">
+                            <button type="submit" class="btn btn-default login">LOGIN</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+
+                <div class="tab-pane" ng-class="{active: !login.loginTab}">
+                  <form role="form" class="margin-top-100" id="registerForm" ng-submit="login.doRegister();">
+                    <div class="table-form">
+                        <div class="form-groups">
+                            <div class="form-group">
+                                <input type="email" ng-model="login.registerUser.email" class="form-control input-lg" id="" required placeholder="EMAIL">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" ng-model="login.registerUser.password" pattern=".{8,}" title="8 characters minimum" class="form-control input-lg" id="" required placeholder="PASSWORD">
+                            </div>
+                        </div>
+                        <div class="button-container">
+                            <button type="submit" class="btn btn-default login">Register</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+          </div>
+
 		</div>			
 	</div>
 </div>

@@ -15,7 +15,8 @@
     'ui.router',
     'snap',
     'dibari.angular-ellipsis',
-    'ngAnimate'
+    'ngAnimate',
+    'firebase'
     ])
  .config(function($stateProvider, $urlRouterProvider, snapRemoteProvider) {
 
@@ -64,4 +65,14 @@
         controllerAs: 'about'
     });
 
-});
+})
+ .run(function($rootScope, $state, userService) {
+     $rootScope.$on('$stateChangeStart', function(event, toState) {
+         var loggedInUser = userService.getLoggedInUser();
+
+         if (!loggedInUser && toState.name !== 'login') {
+             event.preventDefault();
+             $state.go('login');
+         }
+     });
+ })
