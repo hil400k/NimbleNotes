@@ -4,4 +4,10 @@ angular.module('yapp.services')
     var ref = new Firebase('https://lazynotes.firebaseio.com');
 
     return $firebaseAuth(ref);
-});
+})
+
+.service('googleAuthService', function() {
+    var ref = new Firebase('https://lazynotes.firebaseio.com');
+
+    return ref;
+})

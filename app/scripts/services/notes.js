@@ -1,6 +1,6 @@
 angular.module('yapp.services')
 
-.service('notesService', function(storage, $filter) {
+.service('notesService', function(storage, $filter, notesAPI) {
     var ns = {};
 
     ns.nlist = [];
@@ -77,7 +77,7 @@ angular.module('yapp.services')
         storage.update(ns.ncurrent);
     };
 
-    ns.createNoteAPI = function() {
+    ns.createNoteAPI = function() { notesAPI.create();
         var wordsCount = 1;
 
         ns.ncurrent.name = ns.ncurrent.text.split(/\s+/).slice(0, wordsCount).join(' ');

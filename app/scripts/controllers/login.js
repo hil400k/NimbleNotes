@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('yapp.controllers')
-  .controller('LoginCtrl', function($location, $state, authService, userService, settingsService) {
+  .controller('LoginCtrl', function($location, $state, authService, userService, settingsService, googleAuthService) {
     var self = this;
 
     self.init = function() {
@@ -42,6 +42,20 @@ angular.module('yapp.controllers')
             })
         }
 
+        self.saveGoogleUser = function(userData) {
+            var user = userService.newUserRef(userData);
+
+            user.email = userData.google.email;
+            user.googleId = userData.google.id;
+            user.settings = settingsService.getDefault();
+
+            user.$save().then(function(response) {
+                console.info('User saved');
+            }, function() {
+                console.warn('Saving User Error');
+            })
+        }
+
         self.doLogin = function() {
             authService.$authWithPassword({
                 email: self.loginUser.email,
@@ -49,10 +63,24 @@ angular.module('yapp.controllers')
             }).then(function(data) {
                 self.loginUser.email = null;
                 self.loginUser.password = null;
-                $state.go('notes')
+                $state.go('notes');
             }).catch(function() {
                 console.warn('Login Error');
             })
+        }
+
+        self.doGoogleLogin = function() {
+            googleAuthService.authWithOAuthPopup("google", function(error, authData) {
+              if (error) {
+                console.warn("Login Failed!", error);
+              } else {
+                self.saveGoogleUser(authData);
+                $state.go('notes');
+              }
+            }, {
+               remember: "default",
+               scope: "email"
+            });
         }
 
         self.doRegister = function() {
