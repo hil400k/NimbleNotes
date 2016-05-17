@@ -6,7 +6,7 @@ angular.module('yapp.filters', [])
             len = list.length;
 
         for (; i < len; i++) {
-          if (list[i].id === id) {
+          if (list[i].$id === id) {
             return list[i];
           }
         }

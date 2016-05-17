@@ -6,9 +6,18 @@ angular.module('yapp.services')
     ns.nlist = [];
     ns.nlistToRemove = [];
     ns.ncurrent = {};
+    ns.nlistParams = {};
 
     ns.getListItem = function(id) {
         return $filter('getNoteById')(ns.nlist, id);
+    };
+
+    ns.initListParams = function() {
+        ns.nlistParams = {
+            sortCriteria: 'creation',
+            tag: '',
+            priority: null
+        };
     };
 
     ns.initNote = function() {
@@ -16,7 +25,7 @@ angular.module('yapp.services')
             id: null,
             text: '',
             tags: '',
-            name: '',
+//            name: '',
             priority: 1,
             dateOfCreation: null,
             dateOfEditing: null,
@@ -36,7 +45,7 @@ angular.module('yapp.services')
                 id: noteItem.id,
                 text: noteItem.text,
                 tags: noteItem.tags,
-                name: noteItem.name,
+//                name: noteItem.name,
                 priority: noteItem.priority,
                 dateOfCreation: noteItem.dateOfCreation,
                 dateOfEditing: noteItem.dateOfEditing,
@@ -57,33 +66,44 @@ angular.module('yapp.services')
 
     // APIs
 
-    ns.getNotesAPI = function(requestParams) {
-        storage.getAll()
-        .then(
-            function(data) {
-                angular.forEach(data, function(note, index) {
-                    data.textToDisplay = '';
-                })
-                ns.nlist = data;
-                if (ns.getNotesAPICallback) ns.getNotesAPICallback();
-            },
-            function(error) {
-                console.info('error of getting notes');
-            }
-        )
+    ns.getNotesAPI = function() {
+        var notes = notesAPI.getAll(ns.nlistParams);
+
+        notes.$loaded().then(function(response) {
+            angular.forEach(response, function(note, index) {
+                note.textToDisplay = '';
+            })
+            ns.nlist = response;
+            if (ns.getNotesAPICallback) ns.getNotesAPICallback();
+        });
+
+//        storage.getAll()
+//        .then(
+//            function(data) {
+//                angular.forEach(data, function(note, index) {
+//                    data.textToDisplay = '';
+//                })
+//                ns.nlist = data;
+//                if (ns.getNotesAPICallback) ns.getNotesAPICallback();
+//            },
+//            function(error) {
+//                console.info('error of getting notes');
+//            }
+//        )
     };
 
     ns.updateNoteAPI = function() {
+//        notesAPI.update()
         storage.update(ns.ncurrent);
     };
 
-    ns.createNoteAPI = function() { notesAPI.create();
+    ns.createNoteAPI = function() {
         var wordsCount = 1;
 
-        ns.ncurrent.name = ns.ncurrent.text.split(/\s+/).slice(0, wordsCount).join(' ');
-        ns.ncurrent.id = ns.ncurrent.name + getRandomArbitrary(0, 100000);
-        ns.ncurrent.dateOfCreation = ns.ncurrent.dateOfEditing = new Date().toLocaleString();
-        storage.create(ns.ncurrent);
+        ns.ncurrent.tags = makeTagsArray(ns.ncurrent.tags);
+        notesAPI.create(ns.ncurrent);
+//        ns.ncurrent.id = 'id' + getRandomArbitrary(0, 100000);
+//        storage.create(ns.ncurrent);
         ns.initNote();
     };
 
@@ -96,6 +116,16 @@ angular.module('yapp.services')
         ns.initNote();
         ns.getNotesAPI();
     };
+
+    function makeTagsArray(tags) {
+        var newTags = [];
+
+        angular.forEach(tags, function(item, i) {
+            newTags.push(item.text);
+        });
+
+        return newTags;
+    }
 
     function getRandomArbitrary(min, max) {
       return Math.random() * (max - min) + min;

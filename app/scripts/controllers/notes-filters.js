@@ -10,16 +10,9 @@ angular.module('yapp.controllers')
             notesService.getNotesAPI(self.requestedListParams);
         }
 
-        self.initParams = function() {
-            self.requestedListParams = {
-                sortCriteria: 'creation',
-                tag: '',
-                priority: null
-            };
-        };
-
         self.showDefault = function() {
-            self.initParams();
+            noteService.initListParams();
+            self.requestedListParams = notesService.nlistParams;
             self.applyFilters();
         };
 
@@ -30,7 +23,8 @@ angular.module('yapp.controllers')
             }, 2000);
         };
 
-        self.initParams();
+        notesService.initListParams();
+        self.requestedListParams = notesService.nlistParams;
 
         $scope.$watch(() => self.requestedListParams.sortCriteria, function(newVal) {
             if (initialized) {

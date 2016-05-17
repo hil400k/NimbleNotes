@@ -6,7 +6,7 @@ angular.module('yapp.controllers')
 
     self.init = function() {
         notesService.getNotesAPICallback = function() {
-            self.notes = notesService.nlist;
+            self.notes = notesService.nlist;debugger;
         }
         notesService.removeNotesAPICallback = function() {
             $scope.notesCtrl.canChooseForRemoving = false;

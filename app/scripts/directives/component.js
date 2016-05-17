@@ -118,7 +118,7 @@ angular.module('yapp.components', [])
                     highligting = '<span class="note-name">',
                     output;
 
-                output = highligting + [text.slice(0, noteItem.name.length), '</span>', text.slice(noteItem.name.length)].join('');
+//                output = highligting + [text.slice(0, noteItem.name.length), '</span>', text.slice(noteItem.name.length)].join('');
 
                 noteItem.textToDisplay = text;
             }
