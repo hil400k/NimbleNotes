@@ -103,11 +103,11 @@ angular.module('yapp.components', [])
                         });
                     } else {
                         if (!elem.hasClass('choosen-note')) {
-                            notesToRemove.push(noteItem.id);
+                            notesToRemove.push(noteItem.$id);
                             elem.addClass('choosen-note');
                         } else {
                             elem.removeClass('choosen-note');
-                            notesToRemove.splice(notesToRemove.indexOf(noteItem.id), 1);
+                            notesToRemove.splice(notesToRemove.indexOf(noteItem.$id), 1);
                         }
                     }
                 });

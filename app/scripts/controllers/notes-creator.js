@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('yapp.controllers')
-  .controller('NotesCreatorCtrl', function($scope, $state, $rootScope, storage, notesService, notificatorService) {
+  .controller('NotesCreatorCtrl', function($scope, $state, $timeout, $rootScope, $filter, storage, notesService, notificatorService) {
     var self = this;
 
     self.init = function() {
@@ -28,16 +28,32 @@ angular.module('yapp.controllers')
             notificatorService.open('Note should have some text!');
             return;
         }
-        if (self.note.id) {
-            notesService.updateNoteAPI();
+        if (self.note.$id) {
+            notesService.updateNoteAPI().then(function() {
+                notificatorService.open('Note Updated');
+                $timeout(function() {notificatorService.close();}, 2000);
+                notesService.getNotesAPI().then(function(response) {
+                    angular.forEach(response, function(note, index) {
+                        note.textToDisplay = '';
+                    });
+                    $scope.notesCtrl.editingMode = false;
+                    notesService.nlist = $filter('orderBy')(response, notesService.nlistParams.sortCriteria, true);
+                    if (notesService.getNotesAPICallback) notesService.getNotesAPICallback();
+                });
+            });
         } else {
-            notesService.createNoteAPI();
-            $scope.notesCtrl.editingMode = false;
+            notesService.createNoteAPI().then(function() {
+                notesService.initNote();
+                notesService.getNotesAPI().then(function(response) {
+                    angular.forEach(response, function(note, index) {
+                        note.textToDisplay = '';
+                    });
+                    notesService.nlist = $filter('orderBy')(response, notesService.nlistParams.sortCriteria, true);
+                    if (notesService.getNotesAPICallback) notesService.getNotesAPICallback();
+                });
+            });
         }
-        notificatorService.close();
-        notesService.getNotesAPI();
     }
-
 
     self.init();
 

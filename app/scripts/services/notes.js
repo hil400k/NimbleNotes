@@ -1,6 +1,6 @@
 angular.module('yapp.services')
 
-.service('notesService', function(storage, $filter, notesAPI) {
+.service('notesService', function(storage, $filter, $timeout, notesAPI, notificatorService) {
     var ns = {};
 
     ns.nlist = [];
@@ -22,10 +22,8 @@ angular.module('yapp.services')
 
     ns.initNote = function() {
         ns.ncurrent = {
-            id: null,
             text: '',
             tags: '',
-//            name: '',
             priority: 1,
             dateOfCreation: null,
             dateOfEditing: null,
@@ -42,10 +40,9 @@ angular.module('yapp.services')
     ns.setNote = function(noteItem) {
         if (noteItem) {
             ns.ncurrent = {
-                id: noteItem.id,
+                $id: noteItem.$id,
                 text: noteItem.text,
                 tags: noteItem.tags,
-//                name: noteItem.name,
                 priority: noteItem.priority,
                 dateOfCreation: noteItem.dateOfCreation,
                 dateOfEditing: noteItem.dateOfEditing,
@@ -69,52 +66,32 @@ angular.module('yapp.services')
     ns.getNotesAPI = function() {
         var notes = notesAPI.getAll(ns.nlistParams);
 
-        notes.$loaded().then(function(response) {
-            angular.forEach(response, function(note, index) {
-                note.textToDisplay = '';
-            })
-            ns.nlist = response;
-            if (ns.getNotesAPICallback) ns.getNotesAPICallback();
-        });
-
-//        storage.getAll()
-//        .then(
-//            function(data) {
-//                angular.forEach(data, function(note, index) {
-//                    data.textToDisplay = '';
-//                })
-//                ns.nlist = data;
-//                if (ns.getNotesAPICallback) ns.getNotesAPICallback();
-//            },
-//            function(error) {
-//                console.info('error of getting notes');
-//            }
-//        )
+        return notes.$loaded();
     };
 
     ns.updateNoteAPI = function() {
-//        notesAPI.update()
-        storage.update(ns.ncurrent);
+        return notesAPI.update(ns.ncurrent);
     };
 
     ns.createNoteAPI = function() {
         var wordsCount = 1;
 
         ns.ncurrent.tags = makeTagsArray(ns.ncurrent.tags);
-        notesAPI.create(ns.ncurrent);
-//        ns.ncurrent.id = 'id' + getRandomArbitrary(0, 100000);
-//        storage.create(ns.ncurrent);
-        ns.initNote();
+        return notesAPI.create(ns.ncurrent);
     };
 
     ns.removeNotesAPI = function(params) {
+        var api = null;
+
         if (!params) return;
 
-        storage.remove(params);
-        ns.nlistToRemoveInit();
-        if (ns.removeNotesAPICallback) ns.removeNotesAPICallback();
-        ns.initNote();
-        ns.getNotesAPI();
+        if (typeof params === 'string') {
+            api = notesAPI.removeItem(params);
+        } else if (Array.isArray(params)) {
+            api = notesAPI.removeList(params);
+        }
+
+        return api;
     };
 
     function makeTagsArray(tags) {

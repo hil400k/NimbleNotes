@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('yapp.controllers')
-  .controller('NotesListCtrl', function($scope, $state, $filter, notesService, notificatorService) {
+  .controller('NotesListCtrl', function($scope, $state, $filter, $timeout, notesService, notificatorService) {
     var self = this;
 
     self.init = function() {
@@ -11,22 +11,40 @@ angular.module('yapp.controllers')
         notesService.removeNotesAPICallback = function() {
             $scope.notesCtrl.canChooseForRemoving = false;
         }
-        notesService.getNotesAPI();
+        $timeout(function() {notificatorService.open(); });
+        notesService.getNotesAPI().then(afterListReceived);
     }
 
 
     self.removeNotes = function(e) {
         var DELETE_KEY_CODE_LINUX = 127,
-            DELETE_KEY_CODE_WIN = 46;
+            DELETE_KEY_CODE_WIN = 46,
+            toRemove = null;
 
         if (e.keyCode === DELETE_KEY_CODE_LINUX || e.keyCode === DELETE_KEY_CODE_WIN) {
             if ($scope.notesCtrl.canChooseForRemoving) {
-                notesService.removeNotesAPI(notesService.nlistToRemove);
+                toRemove = notesService.nlistToRemove;
             } else {
-                notesService.removeNotesAPI(notesService.ncurrent.id);
+                toRemove = notesService.ncurrent.$id;
             }
-            notificatorService.close();
+            $timeout(function() { notificatorService.open();});
+            notesService.removeNotesAPI(toRemove).then(function() {
+                notesService.nlistToRemoveInit();
+                if (notesService.removeNotesAPICallback) notesService.removeNotesAPICallback();
+                notesService.initNote();
+                notesService.getNotesAPI().then(afterListReceived);
+            });
         }
+    }
+
+    function afterListReceived(response) {
+        angular.forEach(response, function(note, index) {
+            note.textToDisplay = '';
+        });
+
+        notesService.nlist = $filter('orderBy')(response, notesService.nlistParams.sortCriteria, true);
+        if (notesService.getNotesAPICallback) notesService.getNotesAPICallback();
+        $timeout(function() { notificatorService.close(); });
     }
 
     self.init();
