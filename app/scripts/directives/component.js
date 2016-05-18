@@ -81,6 +81,7 @@ angular.module('yapp.components', [])
             setClassToNote();
             highlightName();
             setEvents();
+            noteItem.dateToDisplay = getDateToDisplay(noteItem.dateOfEditing);
 
             function setEvents() {
                 elem.parent().bind('mouseover mouseout', function(e) {
@@ -121,6 +122,22 @@ angular.module('yapp.components', [])
 //                output = highligting + [text.slice(0, noteItem.name.length), '</span>', text.slice(noteItem.name.length)].join('');
 
                 noteItem.textToDisplay = text;
+            }
+
+            function getDateToDisplay(timestampDate) {
+                var date = new Date(timestampDate),
+                    hours = date.getHours(),
+                    minutes = "0" + date.getMinutes(),
+                    year = date.getFullYear().toString(),
+                    month = '' + (date.getMonth() + 1),
+                    day = '' + date.getDate(),
+                    formattedDateTime = null;
+
+                    if (month.length < 2) month = '0' + month;
+                    if (day.length < 2) day = '0' + day;
+                    formattedDateTime = hours + ':' + minutes.substr(-2) + ' ' + day + ':' + month + ':' + year;console.info(formattedDateTime);
+
+                return formattedDateTime;
             }
 
             function setClassToNote() {

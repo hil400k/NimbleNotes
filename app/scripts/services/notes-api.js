@@ -10,12 +10,13 @@ angular.module('yapp.services')
 
     notesAPI.create = function(note) {
         note.dateOfCreation = note.dateOfEditing = Firebase.ServerValue.TIMESTAMP;
+        note.dateOfCreationDesc = note.dateOfEditingDesc = -Firebase.ServerValue.TIMESTAMP;
         notes.$add(note);
     }
 
     notesAPI.getAll = function(params) {
         var query = currentUserNotes.orderByChild(params.sortCriteria);
-
+        // to make decending sorting use field with negative values
         return $firebaseArray(query);
     }
 

@@ -14,7 +14,7 @@ angular.module('yapp.services')
 
     ns.initListParams = function() {
         ns.nlistParams = {
-            sortCriteria: 'creation',
+            sortCriteria: 'dateOfCreation',
             tag: '',
             priority: null
         };
