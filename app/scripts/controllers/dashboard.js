@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('yapp.controllers', ['ngTagsInput', 'yapp.services', 'ngSanitize', 'ngQuill'])
-  .controller('DashboardCtrl', function($state, authService) {
+  .controller('DashboardCtrl', function($state, authService, storage) {
     var self = this;
 
     self.init = function() {
@@ -9,6 +9,7 @@ angular.module('yapp.controllers', ['ngTagsInput', 'yapp.services', 'ngSanitize'
 
         self.doLogout = function() {
             authService.$unauth();
+            storage.remove('settings');
             $state.go('login');
         }
     }

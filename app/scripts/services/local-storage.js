@@ -1,87 +1,21 @@
 angular.module('yapp.services', ['yapp.filters'])
 
-.factory('storage', function($q) {
-    var STORAGE_ID = 'notes';
+.factory('storage', function() {
+    var lstorage = {
+        items: {},
 
-    var notesService = {
-        notes: [],
-
-        _getFromLocalStorage: function () {
-            return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
+        set: function(name, item) {
+            localStorage.setItem(name, JSON.stringify(item));
         },
 
-        _saveToLocalStorage: function (words) {
-            localStorage.setItem(STORAGE_ID, JSON.stringify(words));
+        get: function(name) {
+            return JSON.parse(localStorage.getItem(name)) || null;
         },
 
-        create: function(data) {
-            var defer = $q.defer();
-
-            notesService.notes.push(data);
-            notesService._saveToLocalStorage(notesService.notes);
-            defer.resolve(notesService.words);
-            return defer.promise;
-        },
-
-        remove: function(data) {
-            var defer = $q.defer(),
-                indexToRemove,
-                indexesToRemove = [];
-
-            if (typeof data === 'string') {
-                for (var i = 0; i < notesService.notes.length; i++) {
-                    if (notesService.notes[i].id === data) {
-                        indexToRemove = i;
-                        break;
-                    }
-                }
-                notesService.notes.splice(indexToRemove, 1);
-
-            } else if (Array.isArray(data)) {
-                for(var i = 0; i < data.length; i++) {
-                    for (var j = 0; j < notesService.notes.length; j++) {
-                        if (data[i] === notesService.notes[j].id) {
-                            indexToRemove = j;
-                            break;
-                        }
-                    }
-                    notesService.notes.splice(indexToRemove, 1);
-                }
-            }
-
-
-            notesService._saveToLocalStorage(notesService.notes);
-            defer.resolve(notesService.notes);
-
-            return defer.promise;
-        },
-
-        getAll: function () {
-            var deferred = $q.defer();
-
-            angular.copy(notesService._getFromLocalStorage(), notesService.notes);
-            deferred.resolve(notesService.notes);
-
-            return deferred.promise;
-        },
-
-        update: function (note) {
-            var deferred = $q.defer();
-
-            for (var i = 0; i < notesService.notes.length; i++) {
-                if (notesService.notes[i].id === note.id) {
-                    notesService.notes[i] = note;
-                    break;
-                }
-            }
-
-            notesService._saveToLocalStorage(notesService.notes);
-            deferred.resolve(notesService.notes);
-
-            return deferred.promise;
+        remove: function(name) {
+            localStorage.removeItem(name);
         }
     };
 
-    return notesService;
-
+    return lstorage;
 });

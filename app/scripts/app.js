@@ -66,7 +66,7 @@
     });
 
 })
- .run(function($rootScope, $state, userService) {
+ .run(function($rootScope, $state, userService, settingsService) {
      $rootScope.$on('$stateChangeStart', function(event, toState) {
          var loggedInUser = userService.getLoggedInUser();
 

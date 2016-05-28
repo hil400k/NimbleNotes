@@ -29,32 +29,37 @@ angular.module('yapp.controllers')
         self.saveUser = function(userData) {
             var user = userService.newUserRef(userData);
 
-            user.email = self.loginUser.email;
-            user.password = self.loginUser.password;
-//            user.settings = settingsService.getDefault();
-
-            user.$save().then(function(response) {
-                self.loginUser = {
-                    email: null,
-                    password: null
-                };
-            }, function() {
-                console.warn('Saving User Error');
-            })
+            user.$loaded().then(function($user) {
+                $user.email = self.loginUser.email;
+                $user.password = self.loginUser.password;
+                $user.settings = settingsService.settings = settingsService.getDefault();
+                user.$save().then(function(response) {
+                    self.doLogin();
+                }, function() {
+                    console.warn('Saving User Error');
+                })
+            });
         }
 
         self.saveGoogleUser = function(userData) {
             var user = userService.newUserRef(userData);
 
-            user.email = userData.google.email;
-            user.googleId = userData.google.id;
-            user.settings = settingsService.getDefault();
-
-            user.$save().then(function(response) {
-                console.info('User saved');
-            }, function() {
-                console.warn('Saving User Error');
-            })
+            user.$loaded().then(function($user) {
+                if ($user.settings) {
+                    settingsService.set($user.settings);
+                    $state.go('notes');
+                } else {
+                    $user.email = userData.google.email;
+                    $user.googleId = userData.google.id;
+                    $user.settings = settingsService.settings = settingsService.getDefault();
+                    $user.$save().then(function(response) {
+                        console.info('User saved');
+                        $state.go('notes');
+                    }, function() {
+                        console.warn('Saving User Error');
+                    })
+                }
+            });
         }
 
         self.doLogin = function() {
@@ -62,10 +67,16 @@ angular.module('yapp.controllers')
                 email: self.loginUser.email,
                 password: self.loginUser.password
             }).then(function(data) {
-                self.userObject = authService.$getAuth();
-                self.loginUser.email = null;
-                self.loginUser.password = null;
-                $state.go('notes');
+                var user = null;
+
+                user = userService.newUserRef(data);
+                user.$loaded().then(function($user) {
+                    self.userObject = authService.$getAuth();
+                    self.loginUser.email = null;
+                    self.loginUser.password = null;
+                    settingsService.set($user.settings);
+                    $state.go('notes');
+                });
             }).catch(function() {
                 console.warn('Login Error');
             })
@@ -78,7 +89,6 @@ angular.module('yapp.controllers')
               } else {
                 self.userObject = JSON.stringify(authService.$getAuth());
                 self.saveGoogleUser(authData);
-                $state.go('notes');
               }
             }, {
                remember: "default",
@@ -93,7 +103,6 @@ angular.module('yapp.controllers')
             }).then(function(userData) {
                 angular.copy(self.registerUser, self.loginUser);
                 self.saveUser(userData);
-                self.doLogin();
             }).catch(function() {
                 console.warn('Registration Error');
             })

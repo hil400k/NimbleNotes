@@ -1,6 +1,6 @@
 angular.module('yapp.services')
 
-.service('notesService', function(storage, $filter, $timeout, notesAPI, notificatorService, settingsService) {
+.service('notesService', function($filter, $timeout, storage, notesAPI, notificatorService, settingsService) {
     var ns = {};
 
     ns.nlist = [];
@@ -25,7 +25,7 @@ angular.module('yapp.services')
     ns.initNote = function() {
         ns.ncurrent = {
             text: '',
-            tags: '',
+            tags: [settingsService.get().defaultTag],
             priority: 1,
             dateOfCreation: null,
             dateOfEditing: null,

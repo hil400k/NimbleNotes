@@ -1,30 +1,13 @@
 angular.module('yapp.services')
 
-.service('settingsService', function($firebaseObject, $q, authService) {
+.service('settingsService', function($firebaseObject, $q, authService, storage) {
     var ref = new Firebase('https://lazynotes.firebaseio.com/users'),
         settingsService = {},
-        currentUser = authService.$getAuth(),
-        $user = $firebaseObject(ref.child(currentUser.uid)),
         settings = null;
-
-    settingsService.loadUser = function() {
-        var defer = $q.defer();
-
-        if (!settings) {
-            $user.$loaded().then(function(user) {
-                settings = {};
-                angular.copy(user.settings, settings);
-                defer.resolve('ok');
-            });
-        } else {
-            defer.resolve('ok');
-        }
-
-        return defer.promise;
-    }
 
     settingsService.set = function(newSettings) {
         angular.copy(newSettings, settings);
+        storage.set('settings', settings);
     }
 
     settingsService.get = function() {
@@ -32,8 +15,19 @@ angular.module('yapp.services')
     }
 
     settingsService.save = function() {
+        var currentUser = authService.$getAuth(),
+            $user = $firebaseObject(ref.child(currentUser.uid)),
+            defer = $q.defer();
+
+        $user.settings = {};
         angular.copy(settings, $user.settings);
-        return $user.$save();
+
+        $user.$save().then(function() {
+            defer.resolve('ok');
+            storage.set('settings', settings);
+        });
+
+        return defer.promise;
     }
 
     settingsService.getDefault = function() {
@@ -42,6 +36,15 @@ angular.module('yapp.services')
             defaultTag: ''
         };
     }
+
+    settingsService.init = function() {
+        var lsettings = storage.get('settings');
+
+        if (!settings && lsettings) settings = lsettings;
+        else if (!settings) settings = {};
+    }
+
+    settingsService.init();
 
     return settingsService;
 });
