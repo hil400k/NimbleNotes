@@ -6,6 +6,8 @@ angular.module('yapp.controllers')
 
     self.init = function() {
         self.loginTab = true;
+        self.userObject = null;
+
         self.loginUser = {
             email: null,
             password: null
@@ -15,7 +17,6 @@ angular.module('yapp.controllers')
             email: null,
             password: null
         };
-
 
         self.toLogin = function() {
             self.loginTab = true;
@@ -30,7 +31,7 @@ angular.module('yapp.controllers')
 
             user.email = self.loginUser.email;
             user.password = self.loginUser.password;
-            user.settings = settingsService.getDefault();
+//            user.settings = settingsService.getDefault();
 
             user.$save().then(function(response) {
                 self.loginUser = {
@@ -61,6 +62,7 @@ angular.module('yapp.controllers')
                 email: self.loginUser.email,
                 password: self.loginUser.password
             }).then(function(data) {
+                self.userObject = authService.$getAuth();
                 self.loginUser.email = null;
                 self.loginUser.password = null;
                 $state.go('notes');
@@ -74,6 +76,7 @@ angular.module('yapp.controllers')
               if (error) {
                 console.warn("Login Failed!", error);
               } else {
+                self.userObject = JSON.stringify(authService.$getAuth());
                 self.saveGoogleUser(authData);
                 $state.go('notes');
               }

@@ -7,7 +7,7 @@ angular.module('yapp.controllers', ['ngTagsInput', 'yapp.services', 'ngSanitize'
     self.init = function() {
         self.$state = $state;
 
-        self.doLogout = function() {console.info('dfsfsdf');
+        self.doLogout = function() {
             authService.$unauth();
             $state.go('login');
         }

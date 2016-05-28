@@ -8,7 +8,9 @@ angular.module('yapp.controllers')
         self.settings = settingsService.get();
 
         self.save = function() {
-
+            settingsService.save().then(function(data) {
+                console.info(data);
+            });
         }
     }
 

@@ -3,6 +3,7 @@ angular.module('yapp.controllers')
 .controller('NotesFilters', function($scope, $timeout, $filter, notesService) {
     var self = this,
         timer,
+        filterResult = [],
         initialized = false;
 
     self.init = function() {
@@ -12,18 +13,22 @@ angular.module('yapp.controllers')
                     note.textToDisplay = '';
                 });
 
+                filterResult = response;
+
                 if (notesService.nlistParams.priority) {
-                    notesService.nlist = $filter('filter')(response, {priority: notesService.nlistParams.priority});
-                    notesService.nlist = $filter('orderBy')(notesService.nlist, notesService.nlistParams.sortCriteria, true);
-                } else {
-                    notesService.nlist = $filter('orderBy')(response, notesService.nlistParams.sortCriteria, true);
+                    filterResult = $filter('filter')(filterResult, {priority: notesService.nlistParams.priority});
                 }
+                if (notesService.nlistParams.tag) {
+                    filterResult = $filter('tagFilter')(filterResult, notesService.nlistParams.tag);
+                }
+                notesService.nlist = $filter('orderBy')(filterResult, notesService.nlistParams.sortCriteria, true);
+
                 if (notesService.getNotesAPICallback) notesService.getNotesAPICallback();
             });
         }
 
         self.showDefault = function() {
-            noteService.initListParams();
+            notesService.initListParams();
             self.requestedListParams = notesService.nlistParams;
             self.applyFilters();
         };
@@ -32,7 +37,7 @@ angular.module('yapp.controllers')
             $timeout.cancel(timer);
             timer = $timeout(function() {
                 self.applyFilters();
-            }, 2000);
+            }, 1000);
         };
 
         notesService.initListParams();

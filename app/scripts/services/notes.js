@@ -1,12 +1,14 @@
 angular.module('yapp.services')
 
-.service('notesService', function(storage, $filter, $timeout, notesAPI, notificatorService) {
+.service('notesService', function(storage, $filter, $timeout, notesAPI, notificatorService, settingsService) {
     var ns = {};
 
     ns.nlist = [];
     ns.nlistToRemove = [];
     ns.ncurrent = {};
     ns.nlistParams = {};
+    ns.settings = settingsService.get();
+    ns.defaultTag = ns.settings.defaultTag;
 
     ns.getListItem = function(id) {
         return $filter('getNoteById')(ns.nlist, id);
@@ -70,6 +72,7 @@ angular.module('yapp.services')
     };
 
     ns.updateNoteAPI = function() {
+        ns.ncurrent.tags = makeTagsArray(ns.ncurrent.tags);
         return notesAPI.update(ns.ncurrent);
     };
 

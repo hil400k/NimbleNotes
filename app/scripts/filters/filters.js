@@ -13,3 +13,15 @@ angular.module('yapp.filters', [])
         return null;
     }
 })
+.filter('tagFilter', function() {
+    return function(list, tag) {
+        var result = [];
+
+        result = list.filter(function(item) {
+            if (!item.tags) return false;
+            return item.tags.indexOf(tag) !== (-1);
+        });
+
+        return result;
+    }
+})

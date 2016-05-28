@@ -34,7 +34,6 @@ angular.module('yapp.components', [])
         }
     }
 }])
-
 .directive('notificator', ['$injector', function($injector) {
     return {
         restrict: 'E',
@@ -66,7 +65,6 @@ angular.module('yapp.components', [])
         }
     }
 }])
-
 .directive('note', ['$compile', '$timeout', '$injector', function($compile, $timeout, $injector) {
     return {
         restrict: 'E',
@@ -135,7 +133,7 @@ angular.module('yapp.components', [])
 
                     if (month.length < 2) month = '0' + month;
                     if (day.length < 2) day = '0' + day;
-                    formattedDateTime = hours + ':' + minutes.substr(-2) + ' ' + day + ':' + month + ':' + year;console.info(formattedDateTime);
+                    formattedDateTime = hours + ':' + minutes.substr(-2) + ' ' + day + ':' + month + ':' + year;
 
                 return formattedDateTime;
             }

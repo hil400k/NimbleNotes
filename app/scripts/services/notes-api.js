@@ -13,6 +13,7 @@ angular.module('yapp.services')
 
     notesAPI.create = function(note) {
         note.dateOfCreation = note.dateOfEditing = Firebase.ServerValue.TIMESTAMP;
+
         return notes.$add(note);
     }
 
@@ -48,6 +49,7 @@ angular.module('yapp.services')
         note.dateOfEditing = Firebase.ServerValue.TIMESTAMP;
         updatedNote = notes.$getRecord(note.$id);
         angular.copy(emptyToNull(note), updatedNote);
+
         return notes.$save(updatedNote);
     }
 
@@ -60,7 +62,7 @@ angular.module('yapp.services')
     function emptyToNull(params) {
         Object.keys(params).forEach(function(item) {
             if (params[item] === undefined) {
-                params[item] = null;
+                params[item] = '';
             }
         });
 
