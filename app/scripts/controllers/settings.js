@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('yapp.controllers')
+angular.module('app.controllers')
   .controller('SettingsCtrl', function($scope, $state, settingsService) {
     var self = this;
 

@@ -1,4 +1,4 @@
-angular.module('yapp.controllers')
+angular.module('app.controllers')
 
 .controller('NotesFilters', function($scope, $timeout, $filter, notesService) {
     var self = this,

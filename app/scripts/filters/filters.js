@@ -1,4 +1,4 @@
-angular.module('yapp.filters', [])
+angular.module('app.filters', [])
 
 .filter('getNoteById', function() {
     return function(list, id) {

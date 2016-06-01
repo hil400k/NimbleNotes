@@ -1,4 +1,4 @@
-angular.module('yapp.components', [])
+angular.module('app.components', [])
 
 .directive('elastic', [
     '$timeout',
@@ -116,9 +116,6 @@ angular.module('yapp.components', [])
                 var text = noteItem.text,
                     highligting = '<span class="note-name">',
                     output;
-
-//                output = highligting + [text.slice(0, noteItem.name.length), '</span>', text.slice(noteItem.name.length)].join('');
-
                 noteItem.textToDisplay = text;
             }
 

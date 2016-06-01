@@ -1,4 +1,4 @@
-angular.module('yapp.services', ['yapp.filters'])
+angular.module('app.services', ['app.filters'])
 
 .factory('storage', function() {
     var lstorage = {

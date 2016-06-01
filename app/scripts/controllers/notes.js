@@ -1,7 +1,7 @@
 'use strict';
 
 
-angular.module('yapp.controllers')
+angular.module('app.controllers')
   .controller('NotesCtrl', function($scope, $state, storage, notesService, notificatorService) {
     var self = this;
 

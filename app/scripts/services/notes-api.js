@@ -1,4 +1,4 @@
-angular.module('yapp.services')
+angular.module('app.services')
 
 .service('notesAPI', function($firebaseArray, authService, storage) {
     var ref = new Firebase('https://lazynotes.firebaseio.com/notes');

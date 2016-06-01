@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('yapp.controllers', ['ngTagsInput', 'yapp.services', 'ngSanitize', 'ngQuill'])
+angular.module('app.controllers', ['ngTagsInput', 'app.services', 'ngSanitize', 'ngQuill'])
   .controller('DashboardCtrl', function($state, authService, storage) {
     var self = this;
 

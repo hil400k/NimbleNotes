@@ -1,4 +1,4 @@
-angular.module('yapp.services')
+angular.module('app.services')
 
 .service('notificatorService', function() {
     var notificator = {};

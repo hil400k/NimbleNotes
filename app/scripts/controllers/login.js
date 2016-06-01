@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('yapp.controllers')
+angular.module('app.controllers')
   .controller('LoginCtrl', function($location, $state, authService, userService, settingsService, googleAuthService) {
     var self = this;
 

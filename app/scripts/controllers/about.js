@@ -1,5 +1,5 @@
 'use strict';
 
-angular.module('yapp.controllers')
+angular.module('app.controllers')
   .controller('AboutCtrl', function($scope, $state) {
   });

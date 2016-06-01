@@ -1,4 +1,4 @@
-angular.module('yapp.services')
+angular.module('app.services')
 
 .service('settingsService', function($firebaseObject, $q, authService, storage) {
     var ref = new Firebase('https://lazynotes.firebaseio.com/users'),

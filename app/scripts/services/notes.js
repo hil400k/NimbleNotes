@@ -1,4 +1,4 @@
-angular.module('yapp.services')
+angular.module('app.services')
 
 .service('notesService', function($filter, $timeout, storage, notesAPI, notificatorService, settingsService) {
     var ns = {};

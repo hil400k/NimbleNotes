@@ -2,16 +2,16 @@
 
 /**
  * @ngdoc overview
- * @name yapp
+ * @name app
  * @description
- * # yapp
+ * # app
  *
  * Main module of the application.
  */
  angular
- .module('yapp', [
-    'yapp.controllers',
-    'yapp.components',
+ .module('app', [
+    'app.controllers',
+    'app.components',
     'ui.router',
     'snap',
     'dibari.angular-ellipsis',
