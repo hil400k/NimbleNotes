@@ -47,6 +47,9 @@ angular.module('app.controllers')
             user.$loaded().then(function($user) {
                 if ($user.settings) {
                     settingsService.set($user.settings);
+                    var event = document.createEvent('Event');
+                    event.initEvent('logged-in');
+                    document.dispatchEvent(event);
                     $state.go('notes');
                 } else {
                     $user.email = userData.google.email;
@@ -54,6 +57,9 @@ angular.module('app.controllers')
                     $user.settings = settingsService.settings = settingsService.getDefault();
                     $user.$save().then(function(response) {
                         console.info('User saved');
+                        var event = document.createEvent('Event');
+                        event.initEvent('logged-in');
+                        document.dispatchEvent(event);
                         $state.go('notes');
                     }, function() {
                         console.warn('Saving User Error');
@@ -75,6 +81,9 @@ angular.module('app.controllers')
                     self.loginUser.email = null;
                     self.loginUser.password = null;
                     settingsService.set($user.settings);
+                    var event = document.createEvent('Event');
+                    event.initEvent('logged-in');
+                    document.dispatchEvent(event);
                     $state.go('notes');
                 });
             }).catch(function() {
