@@ -806,6 +806,7 @@ angular.module('app.controllers')
         }
         if (self.note.$id) {
             notesService.updateNoteAPI().then(function() {
+                notesService.initNote();
                 notificatorService.open('Note Updated');
                 $timeout(function() {notificatorService.close();}, 2000);
                 notesService.getNotesAPI().then(function(response) {
