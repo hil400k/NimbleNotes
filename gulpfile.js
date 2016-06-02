@@ -29,7 +29,7 @@ gulp.task('html', ['styles'], function() {
   return gulp.src('app/**/*.html')
     .pipe(assets)
     .pipe($.if('*.js', $.ngAnnotate()))
-    .pipe($.if('*.js', $.uglify()))
+//    .pipe($.if('*.js', $.uglify()))
     .pipe($.if('*.css', cssChannel()))
     .pipe(assets.restore())
     .pipe($.useref())

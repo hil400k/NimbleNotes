@@ -1,0 +1,9 @@
+{
+  "firebase": "lazynotes",
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "hosting": {
+    "public": "dist"
+  }
+}
