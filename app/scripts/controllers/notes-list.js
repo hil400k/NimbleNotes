@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app.controllers')
-  .controller('NotesListCtrl', function($scope, $state, $filter, $timeout, notesService, notificatorService) {
+  .controller('NotesListCtrl', function($scope, $state, $filter, $timeout, $rootScope, notesService, notificatorService) {
     var self = this;
 
     self.init = function() {
@@ -11,7 +11,9 @@ angular.module('app.controllers')
         notesService.removeNotesAPICallback = function() {
             $scope.notesCtrl.canChooseForRemoving = false;
         }
-        $timeout(function() {notificatorService.open(); });
+        $rootScope.$on('open-loader', function() {
+            notificatorService.open();
+        })
         notesService.getNotesAPI().then(afterListReceived);
     }
 
@@ -27,7 +29,8 @@ angular.module('app.controllers')
             } else {
                 toRemove = notesService.ncurrent.$id;
             }
-            $timeout(function() { notificatorService.open();});
+
+            $timeout(function() { notificatorService.open(); });
             notesService.removeNotesAPI(toRemove).then(function() {
                 notesService.nlistToRemoveInit();
                 if (notesService.removeNotesAPICallback) notesService.removeNotesAPICallback();

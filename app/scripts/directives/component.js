@@ -34,13 +34,14 @@ angular.module('app.components', [])
         }
     }
 }])
-.directive('notificator', ['$injector', function($injector) {
+.directive('notificator', ['$injector', function($injector, $rootScope) {
     return {
         restrict: 'E',
         replace: false,
         templateUrl: 'views/dashboard/notificator.html',
         link: function(scope, elem, attrs) {
             var notificatorService = $injector.get('notificatorService'),
+                $rootScope = $injector.get('$rootScope'),
                 messageBox = elem.children().children().eq(1).children(),
                 loader = elem.children().children().eq(0),
                 notification = elem.children().children().eq(1);
@@ -57,6 +58,8 @@ angular.module('app.components', [])
                 elem.children().addClass('opened');
                 notificatorService.state = true;
             }
+
+            $rootScope.$broadcast('open-loader');
 
             notificatorService.close = function() {
                 elem.children().removeClass('opened');

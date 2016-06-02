@@ -113,13 +113,14 @@ angular.module('app.components', [])
         }
     }
 }])
-.directive('notificator', ['$injector', function($injector) {
+.directive('notificator', ['$injector', function($injector, $rootScope) {
     return {
         restrict: 'E',
         replace: false,
         templateUrl: 'views/dashboard/notificator.html',
         link: function(scope, elem, attrs) {
             var notificatorService = $injector.get('notificatorService'),
+                $rootScope = $injector.get('$rootScope'),
                 messageBox = elem.children().children().eq(1).children(),
                 loader = elem.children().children().eq(0),
                 notification = elem.children().children().eq(1);
@@ -136,6 +137,8 @@ angular.module('app.components', [])
                 elem.children().addClass('opened');
                 notificatorService.state = true;
             }
+
+            $rootScope.$broadcast('open-loader');
 
             notificatorService.close = function() {
                 elem.children().removeClass('opened');
@@ -835,7 +838,7 @@ angular.module('app.controllers')
 'use strict';
 
 angular.module('app.controllers')
-  .controller('NotesListCtrl', ["$scope", "$state", "$filter", "$timeout", "notesService", "notificatorService", function($scope, $state, $filter, $timeout, notesService, notificatorService) {
+  .controller('NotesListCtrl', ["$scope", "$state", "$filter", "$timeout", "$rootScope", "notesService", "notificatorService", function($scope, $state, $filter, $timeout, $rootScope, notesService, notificatorService) {
     var self = this;
 
     self.init = function() {
@@ -845,7 +848,9 @@ angular.module('app.controllers')
         notesService.removeNotesAPICallback = function() {
             $scope.notesCtrl.canChooseForRemoving = false;
         }
-        $timeout(function() {notificatorService.open(); });
+        $rootScope.$on('open-loader', function() {
+            notificatorService.open();
+        })
         notesService.getNotesAPI().then(afterListReceived);
     }
 
@@ -861,7 +866,8 @@ angular.module('app.controllers')
             } else {
                 toRemove = notesService.ncurrent.$id;
             }
-            $timeout(function() { notificatorService.open();});
+
+            $timeout(function() { notificatorService.open(); });
             notesService.removeNotesAPI(toRemove).then(function() {
                 notesService.nlistToRemoveInit();
                 if (notesService.removeNotesAPICallback) notesService.removeNotesAPICallback();
